@@ -96,7 +96,25 @@ public class LiveMatchActivity extends AppCompatActivity {
         team1 = new Team(str_team1);
         team2 = new Team(str_team2);
         liveInput.createMatch(team1, team2);
+        button_team1.setSelected(true);
+        button_team1.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(210, 140, 56)));
         chrono.start();
+    }
+
+    public void buttonColor()
+    {
+        if(button_team1.isSelected())
+        {
+            button_team1.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(210, 140, 56)));
+            button_team2.setSelected(false);
+            button_team2.setBackgroundTintList(ColorStateList.valueOf(Color.TRANSPARENT));
+        }
+        else
+        {
+            button_team2.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(210, 140, 56)));
+            button_team1.setSelected(false);
+            button_team1.setBackgroundTintList(ColorStateList.valueOf(Color.TRANSPARENT));
+        }
     }
 
 //    public void addToTeam1(View view)
@@ -146,33 +164,17 @@ public class LiveMatchActivity extends AppCompatActivity {
 
     public void selectTeam1(View view)
     {
-        button_team1.setPressed(true);
-        button_team1.setBackgroundColor(Color.rgb(210, 140, 56));
-        button_team2.setPressed(false);
-        button_team1.setBackgroundTintList(ColorStateList.valueOf(Color.TRANSPARENT));
-//        button_team1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v)
-//            {
-//                button_team1.setPressed(false);
-//            }
-//        });
+        button_team1.setSelected(true);
+        button_team2.setSelected(false);
+        buttonColor();
         //TODO: select team 1 to input data
     }
 
     public void selectTeam2(View view)
     {
-        button_team2.setPressed(true);
-        button_team1.setBackgroundColor(Color.rgb(210, 140, 56));
-        button_team1.setPressed(false);
-        button_team1.setBackgroundTintList(ColorStateList.valueOf(Color.TRANSPARENT));
-//        button_team2.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v)
-//            {
-//                button_team2.setPressed(false);
-//            }
-//        });
+        button_team2.setSelected(true);
+        button_team1.setSelected(false);
+        buttonColor();
         //TODO: select team 2 to input data
     }
 
