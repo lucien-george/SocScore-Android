@@ -1,12 +1,19 @@
 package com.SocScore.android.app;
 
+import android.app.Dialog;
+import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.SocScore.framework.data.Match;
 import com.SocScore.framework.data.Team;
 import com.SocScore.framework.scorekeeper.LiveInput;
 
@@ -26,6 +33,17 @@ public class LiveMatchActivity extends AppCompatActivity {
     private Button create_new_match;
     String str_team1;
     String str_team2;
+    private Context context = null;
+    private Dialog dialog = null;
+    private ImageButton close_dialog;
+    private EditText add_player_to_team;
+    private Button add_to_team1;
+    private Button add_to_team2;
+    private Team team1;
+    private Team team2;
+    LiveInput liveInput = new LiveInput();
+    int i = 0;
+    int j = 0;
 
 
     @Override
@@ -36,8 +54,11 @@ public class LiveMatchActivity extends AppCompatActivity {
         str_team1 = getIntent().getStringExtra("team1");
         str_team2 = getIntent().getStringExtra("team2");
         createNewMatch();
-
-
+        context = LiveMatchActivity.this;
+        dialog = new Dialog(context);
+        dialog.setContentView(R.layout.dialog_add_players);
+        setUpDialog();
+        //dialog.show();
     }
 
     public void setUpVariables() {
@@ -56,142 +77,156 @@ public class LiveMatchActivity extends AppCompatActivity {
 
     }
 
+    public void setUpDialog()
+    {
+        close_dialog = (ImageButton) dialog.findViewById(R.id.close_dialog);
+        add_player_to_team = (EditText) dialog.findViewById(R.id.et_add_player);
+        add_to_team1 = (Button) dialog.findViewById(R.id.add_to_team1);
+        add_to_team2 = (Button) dialog.findViewById(R.id.add_to_team2);
+        add_to_team1.setText(str_team1);
+        add_to_team2.setText(str_team2);
+    }
+
     public void createNewMatch()
     {
         tv_team1.setText(str_team1);
         tv_team2.setText(str_team2);
         button_team1.setText(str_team1);
         button_team2.setText(str_team2);
-        LiveInput liveInput = new LiveInput();
-        Team team1 = new Team(str_team1);
-        Team team2 = new Team(str_team2);
+        team1 = new Team(str_team1);
+        team2 = new Team(str_team2);
         liveInput.createMatch(team1, team2);
         chrono.start();
     }
 
-
-
-
-
-
-    //    public void create_Match_Live()
+//    public void addToTeam1(View view)
 //    {
-//        submitTeamLive.setOnClickListener(new View.OnClickListener() {
+//        Map<String , Player> playerMap1 = new HashMap<>();
+//        this.i = i++;
+//        playerMap1.put("player " + i , new Player(add_player_to_team.getText().toString() , team1.getTEAM_ID()));
+//        team1.addPlayer(playerMap1.get(i));
+//        (playerMap1.get(i)).startMatch();
+//    }
+//
+//    public void addToTeam2(View view)
+//    {
+//        Map<String , Player> playerMap2 = new HashMap<>();
+//        this.j = j++;
+//        playerMap2.put("player " + i, new Player(add_player_to_team.getText().toString(), team1.getTEAM_ID()));
+//        team1.addPlayer(playerMap2.get(i));
+//        (playerMap2.get(j)).startMatch();
+//    }
+//
+//    public void closeDialog(View view)
+//    {
+//        liveInput.createMatch(team1, team2);
+//        team1.startMatch();
+//        team2.startMatch();
+//        liveInput.startMatch();
+//        dialog.dismiss();
+//        button_team1.setPressed(true);
+//        button_team1.setBackgroundColor(Color.rgb(210, 140, 56));
+//        chrono.start();
+//    }
+
+
+
+
+    //TODO: add player to team
+    //TODO: Create Match in LiveInput
+    public Match editMatch(Match match)
+    {
+        return match;
+    }
+
+    public void accessLiveMatch(View view)
+    {
+        //TODO: access live match
+    }
+
+    public void selectTeam1(View view)
+    {
+        button_team1.setPressed(true);
+        button_team1.setBackgroundColor(Color.rgb(210, 140, 56));
+        button_team2.setPressed(false);
+        button_team1.setBackgroundTintList(ColorStateList.valueOf(Color.TRANSPARENT));
+//        button_team1.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v)
 //            {
-//                String team_1 = add_team1.getText().toString();
-//                String team_2 = add_team2.getText().toString();
-//                Team team1 = new Team(team_1);
-//                Team team2 = new Team(team_2);
-//                //createMatch(team1 , team2);
-//                live_input_dialog.dismiss();
-//                live_match_dialog.show();
-//                tv_team1.setText(team_1);
-//                tv_team2.setText(team_2);
-//                button_team1.setText(team_1);
-//                button_team2.setText(team_2);
-//                chrono.start();
+//                button_team1.setPressed(false);
 //            }
 //        });
-//    }
-//
-//    //TODO: add player to team
-//    //TODO: Create Match in LiveInput
-//    public Match editMatch(Match match)
-//    {
-//        return match;
-//    }
-//
-//    public void accessLiveMatch(View view)
-//    {
-//        //TODO: access live match
-//    }
-//
-//    public void close_live_match_dialog(View view)
-//    {
-//        live_match_dialog.dismiss();
-//    }
-//
-//    public void selectTeam1(View view)
-//    {
-//        button_team1.setPressed(true);
-//        button_team2.setPressed(false);
-////        button_team1.setOnClickListener(new View.OnClickListener() {
-////            @Override
-////            public void onClick(View v)
-////            {
-////                button_team1.setPressed(false);
-////            }
-////        });
-//        //TODO: select team 1 to input data
-//    }
-//
-//    public void selectTeam2(View view)
-//    {
-//        button_team2.setPressed(true);
-//        button_team1.setPressed(false);
-////        button_team2.setOnClickListener(new View.OnClickListener() {
-////            @Override
-////            public void onClick(View v)
-////            {
-////                button_team2.setPressed(false);
-////            }
-////        });
-//        //TODO: select team 2 to input data
-//    }
-//
-//    public void addYellowCard(View view)
-//    {
-//        if(button_team1.isPressed())
-//        {
-//
-//        }
-//        else if(button_team2.isPressed())
-//        {
-//
-//        }
-//        //TODO: add yellow card incrementation
-//    }
-//
-//    public void addRedCard(View view)
-//    {
-//        if(button_team1.isPressed())
-//        {
-//
-//        }
-//        else if(button_team2.isPressed())
-//        {
-//
-//        }
-//        //TODO: add red card incrementation
-//    }
-//
-//    public void addShotScored(View view)
-//    {
-//        if(button_team1.isPressed())
-//        {
-//
-//        }
-//        else if(button_team2.isPressed())
-//        {
-//
-//        }
-//        //TODO: add Shots scored incrementation
-//    }
-//
-//    public void addShotsNotScored(View view)
-//    {
-//        if(button_team1.isPressed())
-//        {
-//
-//        }
-//        else if(button_team2.isPressed())
-//        {
-//
-//        }
-//        //TODO: add Shots not score incrementation
-//    }
+        //TODO: select team 1 to input data
+    }
+
+    public void selectTeam2(View view)
+    {
+        button_team2.setPressed(true);
+        button_team1.setBackgroundColor(Color.rgb(210, 140, 56));
+        button_team1.setPressed(false);
+        button_team1.setBackgroundTintList(ColorStateList.valueOf(Color.TRANSPARENT));
+//        button_team2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v)
+//            {
+//                button_team2.setPressed(false);
+//            }
+//        });
+        //TODO: select team 2 to input data
+    }
+
+    public void addYellowCard(View view)
+    {
+        if(button_team1.isPressed())
+        {
+
+        }
+        else if(button_team2.isPressed())
+        {
+
+        }
+        //TODO: add yellow card incrementation
+    }
+
+    public void addRedCard(View view)
+    {
+        if(button_team1.isPressed())
+        {
+
+        }
+        else if(button_team2.isPressed())
+        {
+
+        }
+        //TODO: add red card incrementation
+    }
+
+    public void addShotScored(View view)
+    {
+        if(button_team1.isPressed())
+        {
+
+        }
+        else if(button_team2.isPressed())
+        {
+
+        }
+        //TODO: add Shots scored incrementation
+    }
+
+    public void addShotsNotScored(View view)
+    {
+        if(button_team1.isPressed())
+        {
+
+        }
+        else if(button_team2.isPressed())
+        {
+
+        }
+        //TODO: add Shots not score incrementation
+    }
 
 
 }

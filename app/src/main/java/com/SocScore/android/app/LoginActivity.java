@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.dialog_sign_up);
         dialog.setTitle("Sign up");
         signing_up_dialog = (Button) dialog.findViewById(R.id.signing_up);
-        close_dialog_button = (ImageButton) dialog.findViewById(R.id.close_dialogue);
+        close_dialog_button = (ImageButton) dialog.findViewById(R.id.close_dialog);
     }
 
     public void password_forgotten(View view)
@@ -145,7 +145,7 @@ public class LoginActivity extends AppCompatActivity {
         //TODO: create a real AnalysisViewer
     }
 
-    public void close_dialogue(View view)
+    public void close_dialog(View view)
     {
         dialog.dismiss();
     }
