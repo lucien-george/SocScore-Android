@@ -20,4 +20,7 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_live_match">LiveMatchActivity</string>
+    <string name="title_activity_analysis_viewer">AnalysisViewerActivity</string>
+    <string name="title_activity_list_view">ListViewActivity</string>
+    <string name="title_activity_league_input">LeagueInputActivity</string>
 </resources>

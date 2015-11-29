@@ -28,7 +28,7 @@
         android:id="@+id/fab_create_team"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="top"
+        android:layout_gravity="bottom"
         android:layout_margin="@dimen/fab_margin"
         app:backgroundTint="#d28c38"
         android:src="@android:drawable/ic_input_add"

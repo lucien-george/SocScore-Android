@@ -1,6 +1,8 @@
 package com.SocScore.framework.data;
 
 import org.joda.time.LocalDateTime;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -8,7 +10,7 @@ import java.util.List;
 /**
  * Object which stores all information related to a single team.
  */
-public class Team {
+public class Team  implements Serializable {
     private static int count = 0;
 
     private final int TEAM_ID = count++;

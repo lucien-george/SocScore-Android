@@ -22,17 +22,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".BatchInputActivity"></activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".BatchInputActivity" />
         <activity
             android:name=".LiveMatchActivity"
             android:label="@string/title_activity_live_match"
-            android:theme="@style/AppTheme"></activity>
-        <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
-             App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+            android:theme="@style/AppTheme" />
+        <!--
+             ATTENTION: This was auto-generated to add Google Play services to your project for
+             App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name=".AnalysisViewerActivity"
+            android:label="@string/title_activity_analysis_viewer"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ListViewActivity"
+            android:label="@string/title_activity_list_view"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".LeagueInputActivity"
+            android:label="@string/title_activity_league_input"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

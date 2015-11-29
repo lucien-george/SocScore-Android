@@ -17,20 +17,13 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:id="@+id/login_layout">
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/username"
-            android:background="@drawable/username_background"
-            android:layout_gravity="center"
-            android:hint="Username"
-            android:paddingLeft="16dp" />
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/password"
             android:background="@drawable/password_background"
-            android:inputType="textPassword"
+            android:inputType="numberPassword"
             android:layout_gravity="center"
             android:paddingLeft="16dp"
             android:hint="Password" />
@@ -38,9 +31,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/sign_in_background"
-            android:id="@+id/sign_in_button"
-            android:onClick="login"
-            android:text="Login" />
+            android:id="@+id/authentication_button"
+            android:onClick="authentication"
+            android:text="Authenticate" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -56,7 +49,7 @@
             android:textColorLink="#000000"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:layout_gravity="center_horizontal"
-            android:layout_below="@id/sign_in_button"
+            android:layout_below="@id/authentication_button"
             android:onClick="password_forgotten" />
 
         <TextView
@@ -82,14 +75,15 @@
             android:layout_gravity="center_horizontal"
             android:gravity="center_horizontal" />
 
-        <!--<Button-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_below="@id/internet_connection_error"-->
-            <!--android:background="@drawable/sign_in_background"-->
-            <!--android:text="Sign up"-->
-            <!--android:onClick="signUp"-->
-            <!--android:id="@+id/sign_up" />-->
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/internet_connection_error"
+            android:background="@drawable/sign_in_background"
+            android:text="Analysis Viewer"
+            android:onClick="accessAnalysisViewer"
+            android:id="@+id/access_analysis_viewer" />
+
 
     </LinearLayout>
 </RelativeLayout>

@@ -2,10 +2,13 @@ package com.SocScore.android.app;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
@@ -13,9 +16,12 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.SocScore.framework.AccessManager;
 import com.SocScore.framework.data.Match;
+import com.SocScore.framework.data.Player;
 import com.SocScore.framework.data.Team;
 import com.SocScore.framework.scorekeeper.LiveInput;
+import com.SocScore.framework.scorekeeper.ScoreKeeperType;
 
 public class LiveMatchActivity extends AppCompatActivity {
     private Chronometer chrono;
@@ -31,8 +37,8 @@ public class LiveMatchActivity extends AppCompatActivity {
     private TextView tv_team2_score;
     private EditText add_player_data;
     private Button create_new_match;
-    String str_team1;
-    String str_team2;
+    private String str_team1;
+    private String str_team2;
     private Context context = null;
     private Dialog dialog = null;
     private ImageButton close_dialog;
@@ -41,9 +47,7 @@ public class LiveMatchActivity extends AppCompatActivity {
     private Button add_to_team2;
     private Team team1;
     private Team team2;
-    LiveInput liveInput = new LiveInput();
-    int i = 0;
-    int j = 0;
+    LiveInput liveInput;
 
 
     @Override
@@ -51,6 +55,34 @@ public class LiveMatchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_live_match);
         setUpVariables();
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.inflateMenu(R.menu.menu_live);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.action_league:
+                        Intent leagueInput = new Intent(LiveMatchActivity.this, LeagueInputActivity.class);
+                        startActivity(leagueInput);
+                        return true;
+
+                    case R.id.action_main:
+                        Intent liveInput = new Intent(LiveMatchActivity.this, MainActivity.class);
+                        startActivity(liveInput);
+                        return true;
+
+                    case R.id.action_batch:
+                        Intent batchInput = new Intent(LiveMatchActivity.this, BatchInputActivity.class);
+                        startActivity(batchInput);
+                        return true;
+
+                    default:
+                        // If we got here, the user's action was not recognized.
+                        // Invoke the superclass to handle it.
+                        return onMenuItemClick(menuItem);
+                }
+            }
+        });
         str_team1 = getIntent().getStringExtra("team1");
         str_team2 = getIntent().getStringExtra("team2");
         createNewMatch();
@@ -58,7 +90,7 @@ public class LiveMatchActivity extends AppCompatActivity {
         dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_add_players);
         setUpDialog();
-        //dialog.show();
+        dialog.show();
     }
 
     public void setUpVariables() {
@@ -79,6 +111,8 @@ public class LiveMatchActivity extends AppCompatActivity {
 
     public void setUpDialog()
     {
+        AccessManager.authenticate(1234);
+        liveInput= (LiveInput)AccessManager.setInputType(ScoreKeeperType.LIVE_INPUT);
         close_dialog = (ImageButton) dialog.findViewById(R.id.close_dialog);
         add_player_to_team = (EditText) dialog.findViewById(R.id.et_add_player);
         add_to_team1 = (Button) dialog.findViewById(R.id.add_to_team1);
@@ -95,10 +129,9 @@ public class LiveMatchActivity extends AppCompatActivity {
         button_team2.setText(str_team2);
         team1 = new Team(str_team1);
         team2 = new Team(str_team2);
-        liveInput.createMatch(team1, team2);
         button_team1.setSelected(true);
         button_team1.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(210, 140, 56)));
-        chrono.start();
+//        chrono.start();
     }
 
     public void buttonColor()
@@ -117,35 +150,25 @@ public class LiveMatchActivity extends AppCompatActivity {
         }
     }
 
-//    public void addToTeam1(View view)
-//    {
-//        Map<String , Player> playerMap1 = new HashMap<>();
-//        this.i = i++;
-//        playerMap1.put("player " + i , new Player(add_player_to_team.getText().toString() , team1.getTEAM_ID()));
-//        team1.addPlayer(playerMap1.get(i));
-//        (playerMap1.get(i)).startMatch();
-//    }
-//
-//    public void addToTeam2(View view)
-//    {
-//        Map<String , Player> playerMap2 = new HashMap<>();
-//        this.j = j++;
-//        playerMap2.put("player " + i, new Player(add_player_to_team.getText().toString(), team1.getTEAM_ID()));
-//        team1.addPlayer(playerMap2.get(i));
-//        (playerMap2.get(j)).startMatch();
-//    }
-//
-//    public void closeDialog(View view)
-//    {
-//        liveInput.createMatch(team1, team2);
-//        team1.startMatch();
-//        team2.startMatch();
-//        liveInput.startMatch();
-//        dialog.dismiss();
-//        button_team1.setPressed(true);
-//        button_team1.setBackgroundColor(Color.rgb(210, 140, 56));
-//        chrono.start();
-//    }
+    public void addToTeam1(View view)
+    {
+        team1.addPlayer(new Player(add_player_to_team.getText().toString(), team1.getTEAM_ID()));
+    }
+
+    public void addToTeam2(View view)
+    {
+        team2.addPlayer(new Player(add_player_to_team.getText().toString(), team2.getTEAM_ID()));
+    }
+
+    public void closeDialog(View view)
+    {
+        liveInput.createMatch(team1, team2);
+        liveInput.startMatch();
+        dialog.dismiss();
+        button_team1.setPressed(true);
+        button_team1.setBackgroundColor(Color.rgb(210, 140, 56));
+        chrono.start();
+    }
 
 
 

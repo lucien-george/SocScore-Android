@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,6 +34,34 @@ public class MainActivity extends AppCompatActivity {
         live_input_dialog = new Dialog(context);
         setUpVariables();
         setUpDialog();
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.inflateMenu(R.menu.menu_main);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.action_league:
+                        Intent leagueInput = new Intent(MainActivity.this, LeagueInputActivity.class);
+                        startActivity(leagueInput);
+                        return true;
+
+                    case R.id.action_live:
+                        Intent liveInput = new Intent(MainActivity.this, LiveMatchActivity.class);
+                        startActivity(liveInput);
+                        return true;
+
+                    case R.id.action_batch:
+                        Intent batchInput = new Intent(MainActivity.this, BatchInputActivity.class);
+                        startActivity(batchInput);
+                        return true;
+
+                    default:
+                        // If we got here, the user's action was not recognized.
+                        // Invoke the superclass to handle it.
+                        return onMenuItemClick(menuItem);
+                }
+            }
+        });
     }
 
 
@@ -69,7 +99,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void accessLeagueInput(View view)
     {
-       live_input_dialog.show();
+       Intent leagueInput = new Intent(this , LeagueInputActivity.class);
+        startActivity(leagueInput);
     }
 
     public void createNewMatch(View view)

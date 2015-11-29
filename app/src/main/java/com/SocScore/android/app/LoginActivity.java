@@ -15,32 +15,43 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.SocScore.framework.AccessManager;
+import com.SocScore.framework.AnalysisViewer;
+import com.SocScore.framework.LeagueInput;
+import com.SocScore.framework.scorekeeper.BatchInput;
+import com.SocScore.framework.scorekeeper.LiveInput;
+import com.SocScore.framework.scorekeeper.ScoreKeeperType;
+
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText username;
     private EditText password;
-    private Button login;
+    private Button authenticate;
     private Button signing_up_dialog;
-    private FloatingActionButton sign_up;
+    private FloatingActionButton fab_sign_up;
     private ImageButton close_dialog_button;
     private TextView password_forgotten;
     private TextView internet_connection_error;
     private TextView error;
     private Dialog dialog = null;
     private Context context = null;
+    private Button access_analysis_viewer_button;
+    private AnalysisViewer analysisViewer = new AnalysisViewer();
+    private LiveInput liveInput;
+    private BatchInput batchInput;
+    private LeagueInput leagueInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.content_login);
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+        setContentView(R.layout.activity_login);
+        fab_sign_up = (FloatingActionButton) findViewById(R.id.sign_up);
+        fab_sign_up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                dialog.show();
+            }
+        });
         setUpVariables();
         context = LoginActivity.this;
         dialog = new Dialog(context);
@@ -49,13 +60,12 @@ public class LoginActivity extends AppCompatActivity {
 
     public void setUpVariables()
     {
-        username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
-        login = (Button) findViewById(R.id.sign_in_button);
+        authenticate = (Button) findViewById(R.id.authentication_button);
         password_forgotten = (TextView) findViewById(R.id.password_forgotten);
         internet_connection_error = (TextView) findViewById(R.id.internet_connection_error);
         error = (TextView) findViewById(R.id.error);
-        sign_up = (FloatingActionButton) findViewById(R.id.sign_up);
+        access_analysis_viewer_button = (Button) findViewById(R.id.access_analysis_viewer);
     }
 
     public void setUpDialog()
@@ -87,12 +97,14 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
     //checks credentials
-    public void userIsValid(String username_value, String password_value)
+    public void userIsValid(String password_value)
     {
 
-        if (username_value.equals("") && password_value.equals(""))
+        if (password_value.equals("1234"))
         {
-
+            int password = Integer.parseInt(password_value);
+            AccessManager.authenticate(password);
+            liveInput = (LiveInput)AccessManager.setInputType(ScoreKeeperType.LIVE_INPUT);
             goToMainActivity();
         }
         //displays error message for username or password
@@ -111,30 +123,21 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(mainActivity);
     }
 
-    //When login button is clicked, checks credentials to login
-    public void login(View view)
+    //When authentication button is clicked, checks credentials
+    public void authentication(View view)
     {
         //TODO: create an http client
-        login.setBackgroundResource(R.drawable.sign_in_background_selected);
-        String username_value = username.getText().toString();
-        String password_value = password.getText().toString();
         //checks for available network
         if (isNetworkAvailable())
         {
-            //checks credentials
-            userIsValid(username_value, password_value);
+            String password_value = password.getText().toString();
+            userIsValid(password_value);
         }
         else
         {
             //displays error message for connection
             internet_connection_error.setText("Check Internet Connection");
         }
-    }
-
-    public void signUp(View view)
-    {
-        sign_up.setBackgroundResource(R.drawable.sign_in_background_selected);
-        dialog.show();
     }
 
     public void signing_up(View view)
@@ -148,6 +151,12 @@ public class LoginActivity extends AppCompatActivity {
     public void close_dialog(View view)
     {
         dialog.dismiss();
+    }
+
+    public void accessAnalysisViewer(View view)
+    {
+        Intent analysisViewer = new Intent(this , AnalysisViewerActivity.class);
+        startActivity(analysisViewer);
     }
 }
 
