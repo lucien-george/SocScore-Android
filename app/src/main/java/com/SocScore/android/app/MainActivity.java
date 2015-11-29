@@ -123,4 +123,10 @@ public class MainActivity extends AppCompatActivity {
 //        button_team2.setText(team_2);
 //        chrono.start();
     }
+
+    public void accessAnalysisViewer(View view)
+    {
+        Intent analysisViewer = new Intent(this , AnalysisViewerActivity.class);
+        startActivity(analysisViewer);
+    }
 }
