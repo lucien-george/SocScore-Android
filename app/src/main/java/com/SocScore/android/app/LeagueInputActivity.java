@@ -129,21 +129,21 @@ public class LeagueInputActivity extends AppCompatActivity {
         et_add_remove_team.setText("");
     }
 
-    public int findTeamID(String str)
+    public static int findTeamID(String str)
     {
         league = LeagueAnalysis.getLeague();
         for(Team team : league)
         {
-            if(team.getName().contentEquals(str_add_remove_team))
+            if(team.getName().equalsIgnoreCase(str))
             {
                 return team.getTEAM_ID();
             }
-            throw new NullPointerException("Could not find team: " + str_add_remove_team);
+            throw new NullPointerException("Could not find team: " + str);
         }
         return -1;
     }
 
-    public boolean foundTeam(String str)
+    public static boolean foundTeam(String str)
     {
         if (findTeamID(str) == -1)
         {
@@ -170,7 +170,7 @@ public class LeagueInputActivity extends AppCompatActivity {
     {
         str_name = add_player_name.getText().toString();
         ID = Integer.parseInt(add_player_ID.getText().toString());
-        leagueInput.addNewPlayerToTeam(str_name , ID);
+        leagueInput.addNewPlayerToTeam(str_name, ID);
         add_player_name.setText("");
         add_player_ID.setText("");
     }
@@ -180,7 +180,7 @@ public class LeagueInputActivity extends AppCompatActivity {
         int_transfer_player_id = Integer.parseInt(et_transfer_player_id.getText().toString());
         int_old_team_id = Integer.parseInt(et_old_team_id.getText().toString());
         int_new_team_id = Integer.parseInt(et_new_team_id.getText().toString());
-        leagueInput.transferPlayer(int_transfer_player_id , int_old_team_id , int_new_team_id);
+        leagueInput.transferPlayer(int_transfer_player_id, int_old_team_id, int_new_team_id);
         et_transfer_player_id.setText("");
         et_old_team_id.setText("");
         et_new_team_id.setText("");

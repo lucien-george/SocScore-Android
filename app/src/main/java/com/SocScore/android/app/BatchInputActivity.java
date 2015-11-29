@@ -8,26 +8,22 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.SocScore.framework.data.LeagueAnalysis;
 import com.SocScore.framework.data.Team;
 import com.SocScore.framework.scorekeeper.BatchInput;
 
 import org.joda.time.LocalDateTime;
-import org.joda.time.format.ISODateTimeFormat;
 
 public class BatchInputActivity extends AppCompatActivity {
 
     private FloatingActionButton fab_create_new_team;
+    BatchInput batchInput = new BatchInput();
     private EditText et_team1;
     private EditText et_team2;
-    private EditText et_start_time_hours;
-    private EditText et_end_time_hours;
-    private EditText et_start_time_minutes;
-    private EditText et_end_time_minutes;
     private String str_team1;
     private String str_team2;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
     Team team1;
     Team team2;
 
@@ -75,13 +71,14 @@ public class BatchInputActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 str_team1 = et_team1.getText().toString();
-                team1 = new Team(str_team1);
                 str_team2 = et_team2.getText().toString();
-                team2 = new Team(str_team2);
-                startTime = LocalDateTime.parse(et_start_time_hours.getText().toString() + " : " + et_start_time_minutes.getText().toString() , ISODateTimeFormat.basicTime());
-                endTime = LocalDateTime.parse(et_end_time_hours.getText().toString() + " : " + et_end_time_minutes.getText().toString(), ISODateTimeFormat.basicTime());
-                BatchInput batchInput = new BatchInput();
-                batchInput.createMatch(team1 , team2 , startTime , endTime);
+                if(LeagueInputActivity.foundTeam(str_team1) && LeagueInputActivity.foundTeam(str_team2))
+                {
+                    team1 = LeagueAnalysis.findTeam(LeagueInputActivity.findTeamID(str_team1));
+                    team2 = LeagueAnalysis.findTeam(LeagueInputActivity.findTeamID(str_team2));
+                    batchInput.createMatch(team1 , team2 , new LocalDateTime() , new LocalDateTime().plusMinutes(90));
+                }
+                else Toast.makeText(getApplicationContext() , "Teams " + str_team1 + " and " + str_team2 + " are not available" , Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -90,10 +87,6 @@ public class BatchInputActivity extends AppCompatActivity {
     {
         et_team1 = (EditText) findViewById(R.id.et_team1);
         et_team2 = (EditText) findViewById(R.id.et_team2);
-        et_start_time_hours = (EditText) findViewById(R.id.et_start_time_hours);
-        et_end_time_hours = (EditText) findViewById(R.id.et_end_time_hours);
-        et_start_time_minutes = (EditText) findViewById(R.id.et_start_time_minutes);
-        et_end_time_minutes = (EditText) findViewById(R.id.et_end_time_minutes);
     }
 
 }
