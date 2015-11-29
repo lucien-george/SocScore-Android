@@ -19,7 +19,7 @@ import org.joda.time.LocalDateTime;
 public class BatchInputActivity extends AppCompatActivity {
 
     private FloatingActionButton fab_create_new_team;
-    BatchInput batchInput = new BatchInput();
+    BatchInput batchInput;
     private EditText et_team1;
     private EditText et_team2;
     private String str_team1;
@@ -78,7 +78,7 @@ public class BatchInputActivity extends AppCompatActivity {
                     team2 = LeagueAnalysis.findTeam(LeagueInputActivity.findTeamID(str_team2));
                     batchInput.createMatch(team1 , team2 , new LocalDateTime() , new LocalDateTime().plusMinutes(90));
                 }
-                else Toast.makeText(getApplicationContext() , "Teams " + str_team1 + " and " + str_team2 + " are not available" , Toast.LENGTH_LONG).show();
+                else Toast.makeText(getApplicationContext(), "Teams " + str_team1 + " and " + str_team2 + " are not available", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -87,6 +87,7 @@ public class BatchInputActivity extends AppCompatActivity {
     {
         et_team1 = (EditText) findViewById(R.id.et_team1);
         et_team2 = (EditText) findViewById(R.id.et_team2);
+        batchInput = new BatchInput();
     }
 
 }
