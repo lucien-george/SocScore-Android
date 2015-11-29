@@ -13,55 +13,126 @@
     tools:context="com.SocScore.android.app.LeagueInputActivity"
     tools:showIn="@layout/activity_league_input">
 
-    <EditText
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/et_add_remove_team"
-        android:hint="Team"/>
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_add_remove_team"
+                android:hint="Team"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@android:color/transparent"
-            android:id="@+id/add_team"
-            android:onClick="addTeamToLeague"
-            android:text="Add team"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/remove_team"
-            android:onClick="removeTeamFromLeague"
-            android:backgroundTint="@android:color/transparent"
-            android:text="Remove team"/>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@android:color/transparent"
+                    android:id="@+id/add_team"
+                    android:onClick="addTeamToLeague"
+                    android:text="Add team"/>
 
-    </LinearLayout>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/remove_team"
+                    android:onClick="removeTeamFromLeague"
+                    android:backgroundTint="@android:color/transparent"
+                    android:text="Remove team"/>
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/et_add_player_name"
-        android:hint="Player name"/>
+            </LinearLayout>
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/et_add_player_id"
-        android:hint="Team ID"
-        android:inputType="number"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_add_player_name"
+                android:hint="Player name"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/add_player"
-        android:text="Add player"
-        android:onClick="addPlayerToTeam"
-        android:backgroundTint="@android:color/transparent"
-        android:layout_gravity="center"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_add_player_id"
+                android:hint="Team ID"
+                android:inputType="number"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/add_player"
+                android:text="Add player"
+                android:onClick="addPlayerToTeam"
+                android:backgroundTint="@android:color/transparent"
+                android:layout_gravity="center"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_transfer_player"
+                android:hint="Player ID"
+                android:inputType="number"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:hint="Old team ID"
+                android:id="@+id/et_old_team_id" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="New team ID"
+                android:id="@+id/et_new_team_id"
+                android:inputType="number"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Transfer player"
+                android:textStyle="bold"
+                android:backgroundTint="@android:color/transparent"
+                android:id="@+id/transfer_player"
+                android:onClick="transferPlayer"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_remove_player"
+                android:hint="Player ID"
+                android:inputType="number"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/remove_player"
+                android:onClick="removePlayerFromLeague"
+                android:backgroundTint="@android:color/transparent"
+                android:text="Remove player from league"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Match ID"
+                android:id="@+id/et_match_id"
+                android:inputType="number"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/remove_match"
+                android:backgroundTint="@android:color/transparent"
+                android:onClick="removeMatchFromLeague"
+                android:text="Remove match"/>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

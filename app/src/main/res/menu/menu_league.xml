@@ -23,4 +23,15 @@
         android:orderInCategory="100"
         app:showAsAction="never"/>
 
+    <item android:id="@+id/action_save_data"
+        android:title="Save data"
+        android:orderInCategory="100"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/action_load_data"
+        android:title="Load data"
+        android:orderInCategory="100"
+        app:showAsAction="never"/>
+
+
 </menu>

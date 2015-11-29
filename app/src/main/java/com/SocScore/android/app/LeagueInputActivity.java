@@ -29,6 +29,19 @@ public class LeagueInputActivity extends AppCompatActivity {
     private EditText add_player_ID;
     private String str_name;
     private int ID;
+    private EditText et_transfer_player_id;
+    private EditText et_old_team_id;
+    private EditText et_new_team_id;
+    private Button transfer_player;
+    private int int_transfer_player_id;
+    private int int_old_team_id;
+    private int int_new_team_id;
+    private EditText et_remove_player_id;
+    private Button remove_player;
+    private int int_remove_player_id;
+    private EditText et_remove_match_id;
+    private Button remove_match;
+    private int int_remove_match_id;
 
 
     @Override
@@ -62,6 +75,15 @@ public class LeagueInputActivity extends AppCompatActivity {
                         startActivity(analysisViewer);
                         return true;
 
+                    case R.id.action_save_data:
+                        saveData();
+                        return true;
+
+                    case R.id.action_load_data:
+                        loadData();
+                        return true;
+
+
                     default:
                         // If we got here, the user's action was not recognized.
                         // Invoke the superclass to handle it.
@@ -71,6 +93,16 @@ public class LeagueInputActivity extends AppCompatActivity {
         });
 
     }
+    public void saveData()
+    {
+        leagueInput.saveDataToDisk();
+    }
+
+    public void loadData()
+    {
+        leagueInput.loadDataFromDisk();
+    }
+
 
     public void setUpVariables()
     {
@@ -80,6 +112,14 @@ public class LeagueInputActivity extends AppCompatActivity {
         add_player = (Button) findViewById(R.id.add_player);
         add_player_name = (EditText) findViewById(R.id.et_add_player_name);
         add_player_ID = (EditText) findViewById(R.id.et_add_player_id);
+        et_transfer_player_id = (EditText) findViewById(R.id.et_transfer_player);
+        et_old_team_id = (EditText) findViewById(R.id.et_old_team_id);
+        et_new_team_id = (EditText) findViewById(R.id.et_new_team_id);
+        transfer_player = (Button) findViewById(R.id.transfer_player);
+        et_remove_player_id = (EditText) findViewById(R.id.et_remove_player);
+        remove_player = (Button) findViewById(R.id.remove_player);
+        et_remove_match_id = (EditText) findViewById(R.id.et_match_id);
+        remove_match = (Button)  findViewById(R.id.remove_match);
     }
 
     public void addTeamToLeague(View view)
@@ -131,5 +171,32 @@ public class LeagueInputActivity extends AppCompatActivity {
         str_name = add_player_name.getText().toString();
         ID = Integer.parseInt(add_player_ID.getText().toString());
         leagueInput.addNewPlayerToTeam(str_name , ID);
+        add_player_name.setText("");
+        add_player_ID.setText("");
+    }
+
+    public void transferPlayer(View view)
+    {
+        int_transfer_player_id = Integer.parseInt(et_transfer_player_id.getText().toString());
+        int_old_team_id = Integer.parseInt(et_old_team_id.getText().toString());
+        int_new_team_id = Integer.parseInt(et_new_team_id.getText().toString());
+        leagueInput.transferPlayer(int_transfer_player_id , int_old_team_id , int_new_team_id);
+        et_transfer_player_id.setText("");
+        et_old_team_id.setText("");
+        et_new_team_id.setText("");
+    }
+
+    public void removePlayerFromLeague(View view)
+    {
+        int_remove_player_id = Integer.parseInt(et_remove_player_id.getText().toString());
+        leagueInput.removePlayerFromLeague(int_remove_player_id);
+        et_remove_player_id.setText("");
+    }
+
+    public void removeMatchFromLeague(View view)
+    {
+        int_remove_match_id = Integer.parseInt(et_remove_match_id.getText().toString());
+        leagueInput.removeMatchFromLeague(int_remove_match_id);
+        et_remove_match_id.setText("");
     }
 }
