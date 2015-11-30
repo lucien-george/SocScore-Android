@@ -24,17 +24,28 @@
 
     </ListView>
 
-    <EditText
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/et_team1"
-        android:hint="ID team 1" />
+        android:orientation="vertical"
+        android:background="@drawable/sign_in_background">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/et_team2"
-        android:layout_marginTop="16dp"
-        android:hint="ID team 2"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/et_team1"
+            android:hint="ID team 1"
+            android:layout_marginTop="10dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/et_team2"
+            android:layout_marginTop="10dp"
+            android:hint="ID team 2" />
+
+    </LinearLayout>
+
+
 
 </LinearLayout>

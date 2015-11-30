@@ -13,16 +13,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.SocScore.framework.data.LeagueAnalysis;
-import com.SocScore.framework.data.Match;
 import com.SocScore.framework.data.Team;
 import com.SocScore.framework.scorekeeper.BatchInput;
 
@@ -50,14 +46,6 @@ public class BatchInputActivity extends AppCompatActivity {
     private TextView match_title;
     private Dialog batch_input_dialog = null;
     private Context context = null;
-    private RadioButton radio_team1;
-    private RadioButton radio_team2;
-    private TextView team1_score;
-    private TextView team2_score;
-    private Button increment_score;
-    private Button save_match;
-    private RadioGroup select_team;
-    private Match batchMatch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -187,9 +175,7 @@ public class BatchInputActivity extends AppCompatActivity {
     }
 
     public static boolean foundTeam(String str) {
-        if (findTeamID(str) == -1) {
-            return false;
-        }
+        if (findTeamID(str) == -1) return false;
         return true;
     }
 
@@ -214,7 +200,7 @@ public class BatchInputActivity extends AppCompatActivity {
             TextView tv_id = (TextView) convertView.findViewById(R.id.team_id);
             Team team = league_team.get(position);
             tv_name.setText(team.getName());
-            tv_id.setText("" + team.getTEAM_ID());
+            tv_id.setText("ID : " + team.getTEAM_ID());
             return convertView;
         }
     }

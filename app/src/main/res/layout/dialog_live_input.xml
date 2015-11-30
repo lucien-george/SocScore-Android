@@ -47,12 +47,4 @@
         android:id="@+id/create_new_match_button_live_dialog"
         android:backgroundTint="@android:color/transparent" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Access live match"
-        android:id="@+id/access_live_match_button_live_dialog"
-        android:backgroundTint="@android:color/transparent"
-        android:onClick="accessLiveMatch"/>
-
 </LinearLayout>

@@ -17,7 +17,6 @@ public class MainActivity extends AppCompatActivity {
     private Dialog live_input_dialog = null;
     private Context context = null;
     private Button create_new_match_live_button;
-    private Button access_new_match_live_button;
     private Button league_input;
     private EditText add_team1;
     private EditText add_team2;
@@ -74,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
     {
         live_input_dialog.setContentView(R.layout.dialog_live_input);
         create_new_match_live_button = (Button) live_input_dialog.findViewById(R.id.create_new_match_button_live_dialog);
-        access_new_match_live_button = (Button) live_input_dialog.findViewById(R.id.access_live_match_button_live_dialog);
         add_team1 = (EditText) live_input_dialog.findViewById(R.id.et_team1);
         add_team2 = (EditText) live_input_dialog.findViewById(R.id.et_team2);
     }
@@ -82,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
     public void setUpVariables()
     {
         create_new_match_live_button = (Button) findViewById(R.id.create_new_match_button_live_dialog);
-        access_new_match_live_button = (Button) findViewById(R.id.access_live_match_button_live_dialog);
         league_input = (Button) findViewById(R.id.league_input);
     }
 

@@ -3,8 +3,6 @@ package com.SocScore.android.app;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,29 +12,32 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.SocScore.framework.AccessManager;
+import com.SocScore.framework.data.InfractionType;
 import com.SocScore.framework.data.Match;
 import com.SocScore.framework.data.Player;
 import com.SocScore.framework.data.Team;
 import com.SocScore.framework.scorekeeper.LiveInput;
 import com.SocScore.framework.scorekeeper.ScoreKeeperType;
 
+import org.joda.time.LocalDateTime;
+
+import java.util.List;
+
 public class LiveMatchActivity extends AppCompatActivity {
     private Chronometer chrono;
-    private TextView tv_team1;
-    private TextView tv_team2;
-    private Button button_team1;
-    private Button button_team2;
-    private Button button_yellow_card;
-    private Button button_red_card;
-    private Button button_goal;
-    private Button button_shots;
-    private TextView tv_team1_score;
-    private TextView tv_team2_score;
-    private EditText add_player_data;
-    private Button create_new_match;
+//    private Button button_yellow_card;
+//    private Button button_red_card;
+//    private Button button_goal;
+//    private Button button_shots;
+//    private TextView tv_team1_score;
+//    private TextView tv_team2_score;
+//    private EditText add_player_data;
+//    private Button create_new_match;
     private String str_team1;
     private String str_team2;
     private Context context = null;
@@ -48,7 +49,19 @@ public class LiveMatchActivity extends AppCompatActivity {
     private Team team1;
     private Team team2;
     LiveInput liveInput;
-
+    private RadioButton radio_team1;
+    private RadioButton radio_team2;
+    private TextView team1_score;
+    private TextView team2_score;
+    private Button increment_score;
+    private RadioGroup select_team;
+    private RadioButton radio_shots;
+    private RadioButton radio_yellow;
+    private RadioButton radio_red;
+    private RadioButton radio_penalty;
+    private RadioGroup add_feature;
+    private EditText et_player_name;
+    private Match match;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +90,7 @@ public class LiveMatchActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.access_analysis_viewer:
-                        Intent analysisViewer = new Intent(LiveMatchActivity.this , AnalysisViewerActivity.class);
+                        Intent analysisViewer = new Intent(LiveMatchActivity.this, AnalysisViewerActivity.class);
                         startActivity(analysisViewer);
                         return true;
 
@@ -90,7 +103,8 @@ public class LiveMatchActivity extends AppCompatActivity {
         });
         str_team1 = getIntent().getStringExtra("team1");
         str_team2 = getIntent().getStringExtra("team2");
-        createNewMatch();
+        team1 = new Team(str_team1);
+        team2 = new Team(str_team2);
         context = LiveMatchActivity.this;
         dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_add_players);
@@ -100,17 +114,29 @@ public class LiveMatchActivity extends AppCompatActivity {
 
     public void setUpVariables() {
         chrono = (Chronometer) findViewById(R.id.chronometer);
-        tv_team1 = (TextView) findViewById(R.id.team1);
-        tv_team2 = (TextView) findViewById(R.id.team2);
-        button_team1 = (Button) findViewById(R.id.button_team1);
-        button_team2 = (Button) findViewById(R.id.button_team2);
-        button_yellow_card = (Button) findViewById(R.id.button_yellow_card);
-        button_red_card = (Button) findViewById(R.id.button_red_card);
-        button_goal = (Button) findViewById(R.id.button_shots_scored);
-        button_shots = (Button) findViewById(R.id.button_number_of_shots);
-        tv_team1_score = (TextView) findViewById(R.id.tv_team1_score);
-        tv_team2_score = (TextView) findViewById(R.id.tv_team2_score);
-        add_player_data = (EditText) findViewById(R.id.et_player);
+        select_team = (RadioGroup) findViewById(R.id.select_team);
+        team1_score = (TextView) findViewById(R.id.tv_team1_score);
+        team2_score = (TextView) findViewById(R.id.tv_team2_score);
+        increment_score = (Button) findViewById(R.id.increment_score);
+        radio_team1 = (RadioButton) findViewById(R.id.radio_team1);
+        radio_team2 = (RadioButton) findViewById(R.id.radio_team2);
+        radio_shots = (RadioButton) findViewById(R.id.radio_shots);
+        radio_yellow = (RadioButton) findViewById(R.id.radio_yellow);
+        radio_red = (RadioButton) findViewById(R.id.radio_red);
+        et_player_name = (EditText) findViewById(R.id.et_player_match);
+        radio_penalty = (RadioButton) findViewById(R.id.radio_penalty);
+        radio_team1.setText(str_team1);
+        radio_team2.setText(str_team2);
+
+//        button_team1 = (Button) findViewById(R.id.button_team1);
+//        button_team2 = (Button) findViewById(R.id.button_team2);
+//        button_yellow_card = (Button) findViewById(R.id.button_yellow_card);
+//        button_red_card = (Button) findViewById(R.id.button_red_card);
+//        button_goal = (Button) findViewById(R.id.button_shots_scored);
+//        button_shots = (Button) findViewById(R.id.button_number_of_shots);
+//        tv_team1_score = (TextView) findViewById(R.id.tv_team1_score);
+//        tv_team2_score = (TextView) findViewById(R.id.tv_team2_score);
+//        add_player_data = (EditText) findViewById(R.id.et_player);
 
     }
 
@@ -126,57 +152,58 @@ public class LiveMatchActivity extends AppCompatActivity {
         add_to_team2.setText(str_team2);
     }
 
-    public void createNewMatch()
-    {
-        tv_team1.setText(str_team1);
-        tv_team2.setText(str_team2);
-        button_team1.setText(str_team1);
-        button_team2.setText(str_team2);
-        team1 = new Team(str_team1);
-        team2 = new Team(str_team2);
-        button_team1.setSelected(true);
-        button_team1.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(210, 140, 56)));
+//    public void createNewMatch()
+//    {
+//        team1 = new Team(str_team1);
+//        team2 = new Team(str_team2);
+//        tv_team1.setText(str_team1);
+//        tv_team2.setText(str_team2);
+//        button_team1.setText(str_team1);
+//        button_team2.setText(str_team2);
+//        team1 = new Team(str_team1);
+//        team2 = new Team(str_team2);
+//        button_team1.setSelected(true);
+//        button_team1.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(210, 140, 56)));
 //        chrono.start();
-    }
+//    }
 
-    public void buttonColor()
-    {
-        if(button_team1.isSelected())
-        {
-            button_team1.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(210, 140, 56)));
-            button_team2.setSelected(false);
-            button_team2.setBackgroundTintList(ColorStateList.valueOf(Color.TRANSPARENT));
-        }
-        else
-        {
-            button_team2.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(210, 140, 56)));
-            button_team1.setSelected(false);
-            button_team1.setBackgroundTintList(ColorStateList.valueOf(Color.TRANSPARENT));
-        }
-    }
+//    public void buttonColor()
+//    {
+//        if(button_team1.isSelected())
+//        {
+//            button_team1.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(210, 140, 56)));
+//            button_team2.setSelected(false);
+//            button_team2.setBackgroundTintList(ColorStateList.valueOf(Color.TRANSPARENT));
+//        }
+//        else
+//        {
+//            button_team2.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(210, 140, 56)));
+//            button_team1.setSelected(false);
+//            button_team1.setBackgroundTintList(ColorStateList.valueOf(Color.TRANSPARENT));
+//        }
+//    }
 
     public void addToTeam1(View view)
     {
         team1.addPlayer(new Player(add_player_to_team.getText().toString(), team1.getTEAM_ID()));
+        add_player_to_team.setText("");
     }
 
     public void addToTeam2(View view)
     {
         team2.addPlayer(new Player(add_player_to_team.getText().toString(), team2.getTEAM_ID()));
+        add_player_to_team.setText("");
     }
 
     public void closeDialog(View view)
     {
-        liveInput.createMatch(team1, team2);
-        liveInput.startMatch();
+//        match = liveInput.createMatch(team1, team2);
+//        liveInput.startMatch();
         dialog.dismiss();
-        button_team1.setPressed(true);
-        button_team1.setBackgroundColor(Color.rgb(210, 140, 56));
+//        button_team1.setPressed(true);
+//        button_team1.setBackgroundColor(Color.rgb(210, 140, 56));
         chrono.start();
     }
-
-
-
 
     //TODO: add player to team
     //TODO: Create Match in LiveInput
@@ -185,78 +212,116 @@ public class LiveMatchActivity extends AppCompatActivity {
         return match;
     }
 
-    public void accessLiveMatch(View view)
+
+    public void incrementScore(View view)
     {
-        //TODO: access live match
+        List<Player> players_team1 = team1.getPlayers();
+        List<Player> players_team2 = team2.getPlayers();
+        String str_player_name = et_player_name.getText().toString();
+        for(Player player : players_team1)
+        {
+            if(str_player_name.equalsIgnoreCase(player.getPLAYER_NAME()))
+            {
+                int i = Integer.parseInt(team1_score.getText().toString());
+                i++;
+                team1_score.setText("" + i);
+                player.shoots(new LocalDateTime(), true , match.getMATCH_ID());
+            }
+        }
+        for(Player player : players_team2)
+        {
+            if(str_player_name.equalsIgnoreCase(player.getPLAYER_NAME()))
+            {
+                int j = Integer.parseInt(team2_score.getText().toString());
+                j++;
+                team2_score.setText("" + j);
+                player.shoots(new LocalDateTime() , true , match.getMATCH_ID());
+            }
+        }
+        et_player_name.setText("");
     }
 
-    public void selectTeam1(View view)
-    {
-        button_team1.setSelected(true);
-        button_team2.setSelected(false);
-        buttonColor();
-        //TODO: select team 1 to input data
+    public void assignFeatureToPlayer(View view) {
+        List<Player> players_team1 = team1.getPlayers();
+        List<Player> players_team2 = team2.getPlayers();
+        String str_player_name = et_player_name.getText().toString();
+        int selectedID = select_team.getCheckedRadioButtonId();
+        int selectedID2 = add_feature.getCheckedRadioButtonId();
+        switch (selectedID)
+        {
+            case R.id.radio_team1:
+                switch (selectedID2)
+                {
+                    case R.id.radio_shots:
+                        for(Player player : players_team1)
+                        {
+                            if(str_player_name.equalsIgnoreCase(player.getPLAYER_NAME()))
+                            {
+                                player.shoots(new LocalDateTime() , false , match.getMATCH_ID());
+                            }
+                        }
+                    case R.id.radio_yellow:
+                        for(Player player : players_team1)
+                        {
+                            if(str_player_name.equalsIgnoreCase(player.getPLAYER_NAME()))
+                            {
+                                player.commitsInfraction(InfractionType.YELLOW_CARD , new LocalDateTime() , match.getMATCH_ID());
+                            }
+                        }
+                    case R.id.radio_red:
+                        for(Player player : players_team1)
+                        {
+                            if(str_player_name.equalsIgnoreCase(player.getPLAYER_NAME()))
+                            {
+                                player.commitsInfraction(InfractionType.RED_CARD , new LocalDateTime() , match.getMATCH_ID());
+                            }
+                        }
+                    case R.id.radio_penalty:
+                        for(Player player : players_team1)
+                        {
+                            if(str_player_name.equalsIgnoreCase(player.getPLAYER_NAME()))
+                            {
+                                player.commitsInfraction(InfractionType.PENALTY , new LocalDateTime() , match.getMATCH_ID());
+                            }
+                        }
+                }
+            case R.id.radio_team2:
+                switch (selectedID2)
+                {
+                    case R.id.radio_shots:
+                        for(Player player : players_team2)
+                        {
+                            if(str_player_name.equalsIgnoreCase(player.getPLAYER_NAME()))
+                            {
+                                player.shoots(new LocalDateTime() , false , match.getMATCH_ID());
+                            }
+                        }
+                    case R.id.radio_yellow:
+                        for(Player player : players_team2)
+                        {
+                            if(str_player_name.equalsIgnoreCase(player.getPLAYER_NAME()))
+                            {
+                                player.commitsInfraction(InfractionType.YELLOW_CARD , new LocalDateTime() , match.getMATCH_ID());
+                            }
+                        }
+                    case R.id.radio_red:
+                        for(Player player : players_team2)
+                        {
+                            if(str_player_name.equalsIgnoreCase(player.getPLAYER_NAME()))
+                            {
+                                player.commitsInfraction(InfractionType.RED_CARD , new LocalDateTime() , match.getMATCH_ID());
+                            }
+                        }
+                    case R.id.radio_penalty:
+                        for(Player player : players_team2)
+                        {
+                            if(str_player_name.equalsIgnoreCase(player.getPLAYER_NAME()))
+                            {
+                                player.commitsInfraction(InfractionType.PENALTY , new LocalDateTime() , match.getMATCH_ID());
+                            }
+                        }
+                }
+
+        }
     }
-
-    public void selectTeam2(View view)
-    {
-        button_team2.setSelected(true);
-        button_team1.setSelected(false);
-        buttonColor();
-        //TODO: select team 2 to input data
-    }
-
-    public void addYellowCard(View view)
-    {
-        if(button_team1.isPressed())
-        {
-
-        }
-        else if(button_team2.isPressed())
-        {
-
-        }
-        //TODO: add yellow card incrementation
-    }
-
-    public void addRedCard(View view)
-    {
-        if(button_team1.isPressed())
-        {
-
-        }
-        else if(button_team2.isPressed())
-        {
-
-        }
-        //TODO: add red card incrementation
-    }
-
-    public void addShotScored(View view)
-    {
-        if(button_team1.isPressed())
-        {
-
-        }
-        else if(button_team2.isPressed())
-        {
-
-        }
-        //TODO: add Shots scored incrementation
-    }
-
-    public void addShotsNotScored(View view)
-    {
-        if(button_team1.isPressed())
-        {
-
-        }
-        else if(button_team2.isPressed())
-        {
-
-        }
-        //TODO: add Shots not score incrementation
-    }
-
-
 }

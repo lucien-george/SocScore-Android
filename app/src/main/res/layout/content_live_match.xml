@@ -3,188 +3,170 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background">
+    android:padding="32dp"
+    android:background="@drawable/background_blurry">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="20dp"
-        android:orientation="vertical"
-        android:gravity="center">
-
-        <Chronometer
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/chronometer"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="16dp"
-            android:textSize="30dp"/>
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@drawable/sign_in_background">
 
-            <LinearLayout
+            <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_gravity="center">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:id="@+id/team1"
-                    android:layout_marginLeft="16dp"
-                    android:textStyle="bold"
-                    android:textSize="10dp"
-                    android:layout_gravity="center" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tv_team1_score"
-                    android:text="0"
-                    android:textSize="100dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_gravity="center_vertical" />
-
-            </LinearLayout>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/soccer_field1"
-                android:layout_gravity="center"
-                android:layout_marginLeft="16dp"
+                android:id="@+id/close_dialog_batch_input"
+                android:onClick="closeDialogBatchInput"
+                android:background="@drawable/close_pop_up_gray"
+                android:layout_gravity="right|top"
                 android:layout_marginTop="16dp"
                 android:layout_marginRight="16dp" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/title_match"
+                android:layout_marginTop="16dp"
+                android:text=""
+                android:textSize="30dp"/>
+
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_gravity="center">
+                android:elevation="20sp">
 
-                <TextView
+                <Chronometer
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:id="@+id/team2"
-                    android:layout_marginRight="16dp"
-                    android:textStyle="bold"
-                    android:textSize="10dp"
-                    android:layout_gravity="center" />
+                    android:id="@+id/chronometer"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="16dp"
+                    android:textSize="30dp"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/tv_team2_score"
-                    android:text="0"
-                    android:textSize="100dp"
-                    android:layout_marginRight="16dp"/>
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginTop="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_team1_score"
+                        android:text="0"
+                        android:textSize="100dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_gravity="center_horizontal" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/soccer_field1"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginRight="16dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_team2_score"
+                        android:text="0"
+                        android:textSize="100dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_gravity="center_horizontal"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical"
+                android:id="@+id/select_team">
 
-    </LinearLayout>
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:id="@+id/radio_team1"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text=""
-            android:textStyle="bold"
-            android:id="@+id/button_team1"
-            android:onClick="selectTeam1"
-            android:layout_gravity="left|center_vertical"
-            android:backgroundTint="@android:color/transparent"/>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center_vertical">
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:id="@+id/radio_team2"
+                    android:layout_marginTop="10dp" />
+            </RadioGroup>
 
             <EditText
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/et_player"
-                android:hint="Player"
-                android:textStyle="bold"
-                android:layout_gravity="center"/>
+                android:hint="  Player's name"
+                android:layout_marginTop="16dp"
+                android:id="@+id/et_player_match"
+                android:background="@drawable/sign_in_background"/>
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:id="@+id/add_feature">
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radio_shots"
+                    android:text="Shots"/>
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radio_red"
+                    android:text="Red card"/>
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radio_yellow"
+                    android:text="Yellow card"/>
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radio_penalty"
+                    android:text="Penalty"/>
+
+            </RadioGroup>
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/button_yellow_card"
-                android:text="Yellow card"
-                android:onClick="addYellowCard"
-                android:textStyle="bold"
-                android:layout_gravity="center"
-                android:backgroundTint="@android:color/transparent"/>
+                android:background="#d28c38"
+                android:text="Increment Score"
+                android:id="@+id/increment_score"
+                android:onClick="incrementScore"/>
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Red card"
-                android:textStyle="bold"
-                android:id="@+id/button_red_card"
-                android:backgroundTint="@android:color/transparent"
-                android:onClick="addRedCard"
-                android:layout_gravity="center"/>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Goal"
-                android:textStyle="bold"
-                android:id="@+id/button_shots_scored"
-                android:onClick="addShotScored"
-                android:backgroundTint="@android:color/transparent"
-                android:layout_gravity="center"/>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/button_number_of_shots"
-                android:backgroundTint="@android:color/transparent"
-                android:text="Shots"
-                android:textStyle="bold"
-                android:onClick="addShotsNotScored"
-                android:layout_gravity="center"/>
-
+                android:background="#d28c38"
+                android:id="@+id/add_feature_to_player"
+                android:text="Assign to player"
+                android:onClick="assignFeatureToPlayer"/>
         </LinearLayout>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text=""
-            android:textStyle="bold"
-            android:id="@+id/button_team2"
-            android:onClick="selectTeam2"
-            android:layout_gravity="center_vertical|right"
-            android:backgroundTint="@android:color/transparent"/>
-
-    </LinearLayout>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/end_match_button"
-        android:text="End match"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:backgroundTint="#d28c38" android:layout_marginLeft="16dp" android:layout_marginRight="16dp"/>
+    </ScrollView>
 
 </LinearLayout>
