@@ -17,7 +17,7 @@ public class LiveInput extends ScoreKeeper {
      */
     public Match createMatch(Team team1, Team team2) throws RuntimeException {
         if(team1 == team2 || team1 == null || team2 == null) throw new RuntimeException("Cannot add an empty team or duplicate teams to a match");
-        currentMatch = new Match(team1, team2);
+        Match currentMatch = new Match(team1, team2);
         getMATCHES().add(getCurrentMatch());
         hasUnsavedMatches = true;
         return currentMatch;

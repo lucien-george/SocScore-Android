@@ -16,16 +16,6 @@
             android:orientation="vertical"
             android:background="@drawable/sign_in_background">
 
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/close_dialog_batch_input"
-                android:onClick="closeDialogBatchInput"
-                android:background="@drawable/close_pop_up_gray"
-                android:layout_gravity="right|top"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp" />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -163,6 +153,7 @@
                 android:layout_height="wrap_content"
                 android:background="#d28c38"
                 android:id="@+id/add_feature_to_player"
+                android:layout_marginTop="10dp"
                 android:text="Assign to player"
                 android:onClick="assignFeatureToPlayer"/>
         </LinearLayout>

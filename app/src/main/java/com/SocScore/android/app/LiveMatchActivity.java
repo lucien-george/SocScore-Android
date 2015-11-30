@@ -103,8 +103,12 @@ public class LiveMatchActivity extends AppCompatActivity {
         });
         str_team1 = getIntent().getStringExtra("team1");
         str_team2 = getIntent().getStringExtra("team2");
+        radio_team1.setText(str_team1);
+        radio_team2.setText(str_team2);
         team1 = new Team(str_team1);
         team2 = new Team(str_team2);
+//        match = liveInput.createMatch(team1, team2);
+//        liveInput.startMatch();
         context = LiveMatchActivity.this;
         dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_add_players);
@@ -125,8 +129,6 @@ public class LiveMatchActivity extends AppCompatActivity {
         radio_red = (RadioButton) findViewById(R.id.radio_red);
         et_player_name = (EditText) findViewById(R.id.et_player_match);
         radio_penalty = (RadioButton) findViewById(R.id.radio_penalty);
-        radio_team1.setText(str_team1);
-        radio_team2.setText(str_team2);
 
 //        button_team1 = (Button) findViewById(R.id.button_team1);
 //        button_team2 = (Button) findViewById(R.id.button_team2);
@@ -197,8 +199,6 @@ public class LiveMatchActivity extends AppCompatActivity {
 
     public void closeDialog(View view)
     {
-//        match = liveInput.createMatch(team1, team2);
-//        liveInput.startMatch();
         dialog.dismiss();
 //        button_team1.setPressed(true);
 //        button_team1.setBackgroundColor(Color.rgb(210, 140, 56));
@@ -207,10 +207,6 @@ public class LiveMatchActivity extends AppCompatActivity {
 
     //TODO: add player to team
     //TODO: Create Match in LiveInput
-    public Match editMatch(Match match)
-    {
-        return match;
-    }
 
 
     public void incrementScore(View view)
@@ -222,7 +218,7 @@ public class LiveMatchActivity extends AppCompatActivity {
         {
             if(str_player_name.equalsIgnoreCase(player.getPLAYER_NAME()))
             {
-                int i = Integer.parseInt(team1_score.getText().toString());
+                int i = 0;
                 i++;
                 team1_score.setText("" + i);
                 player.shoots(new LocalDateTime(), true , match.getMATCH_ID());
@@ -232,7 +228,7 @@ public class LiveMatchActivity extends AppCompatActivity {
         {
             if(str_player_name.equalsIgnoreCase(player.getPLAYER_NAME()))
             {
-                int j = Integer.parseInt(team2_score.getText().toString());
+                int j = 0;
                 j++;
                 team2_score.setText("" + j);
                 player.shoots(new LocalDateTime() , true , match.getMATCH_ID());
