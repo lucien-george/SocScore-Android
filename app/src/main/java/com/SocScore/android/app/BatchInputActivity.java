@@ -1,8 +1,6 @@
 package com.SocScore.android.app;
 
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -45,12 +43,11 @@ public class BatchInputActivity extends AppCompatActivity {
         {
             team_name.add(team.getName());
         }
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, team_name);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.text_view, team_name);
         listView.setAdapter(arrayAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                view.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(210, 140, 56)));
                 view.setSelected(true);
             }
         });
