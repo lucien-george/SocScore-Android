@@ -60,7 +60,7 @@ public class AnalysisViewerActivity extends AppCompatActivity {
                 {
                     rank_team_score.add(team.getName());
                 }
-                ArrayAdapter<String> arrayAdapterScore = new ArrayAdapter<>(this , R.layout.text_view, rank_team_score);
+                ArrayAdapter<String> arrayAdapterScore = new ArrayAdapter<>(this , R.layout.list_view_layout, rank_team_score);
                 listView.setAdapter(arrayAdapterScore);
             case (R.id.rank_total_goals) :
                 league = analysisViewer.getLeague(TeamRankType.TOTAL_GOALS);
@@ -69,7 +69,7 @@ public class AnalysisViewerActivity extends AppCompatActivity {
                 {
                     rank_team_total_goals.add(team.getName());
                 }
-                ArrayAdapter<String> arrayAdapterTotalGoals = new ArrayAdapter<>(this , R.layout.text_view, rank_team_total_goals);
+                ArrayAdapter<String> arrayAdapterTotalGoals = new ArrayAdapter<>(this , R.layout.list_view_layout, rank_team_total_goals);
                 listView.setAdapter(arrayAdapterTotalGoals);
         }
     }

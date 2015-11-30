@@ -50,7 +50,7 @@ public class AnalysisViewerTeamIDActivity extends AppCompatActivity {
         {
             rank_team_id.add(team.getName());
         }
-        ArrayAdapter<String> arrayAdapterID = new ArrayAdapter<>(this , R.layout.text_view, rank_team_id);
+        ArrayAdapter<String> arrayAdapterID = new ArrayAdapter<>(this , R.layout.list_view_layout, rank_team_id);
         listView.setAdapter(arrayAdapterID);
     }
 
