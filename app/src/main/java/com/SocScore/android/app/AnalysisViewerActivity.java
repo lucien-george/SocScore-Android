@@ -15,6 +15,7 @@ import com.SocScore.framework.data.Team;
 import com.SocScore.framework.data.TeamRankType;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AnalysisViewerActivity extends AppCompatActivity {
 
@@ -25,6 +26,7 @@ public class AnalysisViewerActivity extends AppCompatActivity {
     private Button show_league;
     private ListView listView;
     private AnalysisViewer analysisViewer = new AnalysisViewer();
+    private List<Team> league = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,33 +45,32 @@ public class AnalysisViewerActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listView);
     }
 
-
     public void showLeague(View view)
     {
-        Intent listViewActivity = new Intent(AnalysisViewerActivity.this, ListViewActivity.class);
-        Bundle rank_bundle = new Bundle();
-        ArrayList<Team> rank_team_list = new ArrayList<Team>();
-        ArrayAdapter<Team> arrayAdapter = new ArrayAdapter<Team>(this , android.R.layout.simple_list_item_1 , rank_team_list);
         int selectedID = team_rank.getCheckedRadioButtonId();
         switch(selectedID)
         {
             case (R.id.rank_team_id) :
-                rank_team_list = (ArrayList<Team>) analysisViewer.getLeague(TeamRankType.ID);
-                listView.setAdapter(arrayAdapter);
-//                rank_bundle.putSerializable("rank_team_list" , (Serializable) rank_team_list);
-//                startActivity(listViewActivity);
-            case (R.id.rank_team_score) :
-                rank_team_list = (ArrayList<Team>) analysisViewer.getLeague(TeamRankType.TEAM_SCORE);
-                listView.setAdapter(arrayAdapter);
-//                listViewActivity = new Intent(AnalysisViewerActivity.this, ListViewActivity.class);
-//                rank_bundle.putSerializable("rank_team_list", (Serializable) rank_team_list);
-                startActivity(listViewActivity);
+                Intent teamIDActivity = new Intent(this, AnalysisViewerTeamIDActivity.class);
+                startActivity(teamIDActivity);
+            case (R.id.rank_team_score) :;
+                league = analysisViewer.getLeague(TeamRankType.TEAM_SCORE);
+                ArrayList<String> rank_team_score = new ArrayList<>();
+                for(Team team : league)
+                {
+                    rank_team_score.add(team.getName());
+                }
+                ArrayAdapter<String> arrayAdapterScore = new ArrayAdapter<>(this , R.layout.text_view, rank_team_score);
+                listView.setAdapter(arrayAdapterScore);
             case (R.id.rank_total_goals) :
-                rank_team_list = (ArrayList<Team>) analysisViewer.getLeague(TeamRankType.TOTAL_GOALS);
-                listView.setAdapter(arrayAdapter);
-//                listViewActivity = new Intent(AnalysisViewerActivity.this, ListViewActivity.class);
-//                rank_bundle.putSerializable("rank_team_list", (Serializable) rank_team_list);
-//                startActivity(listViewActivity);
+                league = analysisViewer.getLeague(TeamRankType.TOTAL_GOALS);
+                ArrayList<String> rank_team_total_goals = new ArrayList<>();
+                for(Team team : league)
+                {
+                    rank_team_total_goals.add(team.getName());
+                }
+                ArrayAdapter<String> arrayAdapterTotalGoals = new ArrayAdapter<>(this , R.layout.text_view, rank_team_total_goals);
+                listView.setAdapter(arrayAdapterTotalGoals);
         }
     }
 }

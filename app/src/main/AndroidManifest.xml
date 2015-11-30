@@ -50,6 +50,10 @@
         <activity
             android:name=".LeagueInputActivity"
             android:label="@string/title_activity_league_input"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".AnalysisViewerTeamIDActivity"
+            android:label="@string/title_activity_analysis_viewer_team_id"
             android:theme="@style/AppTheme"></activity>
     </application>
 

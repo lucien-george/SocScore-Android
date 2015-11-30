@@ -7,9 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.SocScore.framework.data.LeagueAnalysis;
 import com.SocScore.framework.data.Team;
@@ -24,14 +27,16 @@ public class BatchInputActivity extends AppCompatActivity {
     BatchInput batchInput;
     private String str_team1;
     private String str_team2;
+    private TextView tv_team1;
+    private TextView tv_team2;
+    private ArrayList<String> list = new ArrayList<>(2);
     Team team1;
     Team team2;
     private static List<Team> league = new ArrayList<>();
     private ListView listView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_batch_input);
         setUpVariables();
@@ -39,16 +44,22 @@ public class BatchInputActivity extends AppCompatActivity {
         toolbar.inflateMenu(R.menu.menu_batch);
         league = LeagueAnalysis.getLeague();
         ArrayList<String> team_name = new ArrayList<>();
-        for(Team team : league)
-        {
+        for (Team team : league) {
             team_name.add(team.getName());
         }
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.text_view, team_name);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.checkbox, team_name);
         listView.setAdapter(arrayAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 view.setSelected(true);
+                CheckBox v;
+                v = (CheckBox) view;
+                if (v.isChecked()) {
+                    list.add(v.getText().toString());
+                } else {
+                    list.remove(v.getText().toString());
+                }
             }
         });
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -71,7 +82,7 @@ public class BatchInputActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.access_analysis_viewer:
-                        Intent analysisViewer = new Intent(BatchInputActivity.this , AnalysisViewerActivity.class);
+                        Intent analysisViewer = new Intent(BatchInputActivity.this, AnalysisViewerActivity.class);
                         startActivity(analysisViewer);
                         return true;
 
@@ -83,7 +94,7 @@ public class BatchInputActivity extends AppCompatActivity {
             }
         });
         fab_create_new_team = (FloatingActionButton) findViewById(R.id.fab_create_team);
-        fab_create_new_team.setOnClickListener(new View.OnClickListener() {
+        fab_create_new_team.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
 //                ArrayList<Team> league_al = (ArrayList)league;
@@ -101,21 +112,17 @@ public class BatchInputActivity extends AppCompatActivity {
         });
     }
 
-    public void setUpVariables()
-    {
-//        et_team1 = (EditText) findViewById(R.id.et_team1);
-//        et_team2 = (EditText) findViewById(R.id.et_team2);
+    public void setUpVariables() {
+        tv_team1 = (TextView) findViewById(R.id.team1);
+        tv_team2 = (TextView) findViewById(R.id.team2);
         batchInput = new BatchInput();
         listView = (ListView) findViewById(R.id.listView);
     }
 
-    public static int findTeamID(String str)
-    {
+    public static int findTeamID(String str) {
         league = LeagueAnalysis.getLeague();
-        for(Team team : league)
-        {
-            if(team.getName().equalsIgnoreCase(str))
-            {
+        for (Team team : league) {
+            if (team.getName().equalsIgnoreCase(str)) {
                 return team.getTEAM_ID();
             }
             throw new NullPointerException("Could not find team: " + str);
@@ -123,10 +130,8 @@ public class BatchInputActivity extends AppCompatActivity {
         return -1;
     }
 
-    public static boolean foundTeam(String str)
-    {
-        if (findTeamID(str) == -1)
-        {
+    public static boolean foundTeam(String str) {
+        if (findTeamID(str) == -1) {
             return false;
         }
         return true;

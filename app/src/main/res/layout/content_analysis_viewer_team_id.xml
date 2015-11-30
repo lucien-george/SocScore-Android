@@ -8,11 +8,9 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.SocScore.android.app.BatchInputActivity"
-    tools:showIn="@layout/activity_batch_input"
-    android:background="@drawable/background"
-    android:orientation="vertical"
-    android:id="@+id/batch_input_linear_layout">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.SocScore.android.app.AnalysisViewerTeamIDActivity"
+    tools:showIn="@layout/activity_analysis_viewer_team_id">
 
     <ListView
         android:layout_width="match_parent"
@@ -21,27 +19,6 @@
         android:layout_marginTop="60dp"
         android:layout_marginBottom="60dp"
         android:background="@drawable/key_selected">
-
     </ListView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/team1"
-            android:text=""
-            android:textStyle="bold"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/team2"
-            android:text=""
-            android:textStyle="bold"/>
-    </LinearLayout>
 
 </LinearLayout>

@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.SocScore.android.app.LeagueInputActivity"
-    android:background="@drawable/background_blurry">
+    android:background="@drawable/background_blurry"
+    tools:context="com.SocScore.android.app.AnalysisViewerTeamIDActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -19,9 +19,8 @@
             android:layout_height="?attr/actionBarSize"
             android:background="#d28c38"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
-
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_league_input" />
+    <include layout="@layout/content_analysis_viewer_team_id" />
 
 </android.support.design.widget.CoordinatorLayout>
