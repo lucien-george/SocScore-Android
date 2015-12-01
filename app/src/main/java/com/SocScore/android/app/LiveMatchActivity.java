@@ -20,7 +20,6 @@ import android.widget.Toast;
 import com.SocScore.framework.AccessManager;
 import com.SocScore.framework.data.InfractionType;
 import com.SocScore.framework.data.LeagueAnalysis;
-import com.SocScore.framework.data.Match;
 import com.SocScore.framework.data.Player;
 import com.SocScore.framework.data.Team;
 import com.SocScore.framework.scorekeeper.LiveInput;
@@ -32,14 +31,6 @@ import java.util.List;
 
 public class LiveMatchActivity extends AppCompatActivity {
     private Chronometer chrono;
-//    private Button button_yellow_card;
-//    private Button button_red_card;
-//    private Button button_goal;
-//    private Button button_shots;
-//    private TextView tv_team1_score;
-//    private TextView tv_team2_score;
-//    private EditText add_player_data;
-//    private Button create_new_match;
     private String str_team1;
     private String str_team2;
     private Context context = null;
@@ -63,7 +54,6 @@ public class LiveMatchActivity extends AppCompatActivity {
     private RadioButton rd_radio_penalty;
     private RadioGroup add_feature;
     private EditText et_player_name;
-    private Match match;
     private static int count1 = 1;
     private static int count2 = 1;
 
@@ -144,6 +134,7 @@ public class LiveMatchActivity extends AppCompatActivity {
         rd_radio_red = (RadioButton) findViewById(R.id.radio_red);
         et_player_name = (EditText) findViewById(R.id.et_player_match);
         rd_radio_penalty = (RadioButton) findViewById(R.id.radio_penalty);
+        add_feature = (RadioGroup) findViewById(R.id.add_feature);
 
     }
 
@@ -210,8 +201,8 @@ public class LiveMatchActivity extends AppCompatActivity {
         List<Player> players_team1 = team1.getPlayers();
         List<Player> players_team2 = team2.getPlayers();
         String str_player_name = et_player_name.getText().toString();
-        int selectedID2 = add_feature.getCheckedRadioButtonId();
-        switch (selectedID2)
+        int selectedID = add_feature.getCheckedRadioButtonId();
+        switch (selectedID)
         {
             case (R.id.radio_shots):
                 for (Player player : players_team1) {
