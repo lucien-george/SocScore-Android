@@ -15,12 +15,11 @@ public class LiveInput extends ScoreKeeper {
      * @param team2 Second team being added.
      * @throws RuntimeException throws an exception if either of the two teams being added are null, or are the same team.
      */
-    public Match createMatch(Team team1, Team team2) throws RuntimeException {
+    public void createMatch(Team team1, Team team2) throws RuntimeException {
         if(team1 == team2 || team1 == null || team2 == null) throw new RuntimeException("Cannot add an empty team or duplicate teams to a match");
-        Match currentMatch = new Match(team1, team2);
+        currentMatch = new Match(team1, team2);
         getMATCHES().add(getCurrentMatch());
         hasUnsavedMatches = true;
-        return currentMatch;
     }
 
     /**

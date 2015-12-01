@@ -23,4 +23,9 @@
         android:orderInCategory="100"
         app:showAsAction="never"/>
 
+    <item android:id="@+id/add_all_matches_to_league"
+        android:title="Add all matches"
+        android:orderInCategory="100"
+        app:showAsAction="never"/>
+
 </menu>

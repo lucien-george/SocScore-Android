@@ -18,9 +18,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.SocScore.framework.AccessManager;
 import com.SocScore.framework.data.LeagueAnalysis;
 import com.SocScore.framework.data.Team;
 import com.SocScore.framework.scorekeeper.BatchInput;
+import com.SocScore.framework.scorekeeper.ScoreKeeperType;
 
 import org.joda.time.LocalDateTime;
 
@@ -89,6 +91,8 @@ public class BatchInputActivity extends AppCompatActivity {
                         Intent analysisViewer = new Intent(BatchInputActivity.this, AnalysisViewerActivity.class);
                         startActivity(analysisViewer);
                         return true;
+                    case R.id.add_all_matches_to_league:
+                        addMatchesToLeague();
 
                     default:
                         // If we got here, the user's action was not recognized.
@@ -122,47 +126,31 @@ public class BatchInputActivity extends AppCompatActivity {
                         if(int_team2_ID == j)
                         {
                             team2 = LeagueAnalysis.findTeam(j);
+                            break;
                         }
                     }
                 }
+                AccessManager.authenticate(1234);
+                batchInput = (BatchInput) AccessManager.setInputType(ScoreKeeperType.BATCH_INPUT);
                 batchInput.createMatch(team1 , team2 , new LocalDateTime() , new LocalDateTime().plusMinutes(90));
                 batchInput.saveMatch();
-//                setUpDialog();
-//                batch_input_dialog.show();
-//                ArrayList<Team> league_al = (ArrayList)league;
-//                Team [] league_array = league.toArray(new Team[league.size()]);
-//                str_team1 = et_team1.getText().toString();
-//                str_team2 = et_team2.getText().toString();
-//                if(LeagueInputActivity.foundTeam(str_team1) && LeagueInputActivity.foundTeam(str_team2))
-//                {
-//                    team1 = LeagueAnalysis.findTeam(LeagueInputActivity.findTeamID(str_team1));
-//                    team2 = LeagueAnalysis.findTeam(LeagueInputActivity.findTeamID(str_team2));
-//                    batchInput.createMatch(team1 , team2 , new LocalDateTime() , new LocalDateTime().plusMinutes(90));
-//                }
-//                else Toast.makeText(getApplicationContext(), "Teams " + str_team1 + " and " + str_team2 + " are not available", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext() , "match with teams " + team1.getName() + " (ID : " + team1.getTEAM_ID() + "), and " + team2.getName() + " (ID : " + team2.getTEAM_ID() + ") was successfully saved" , Toast.LENGTH_LONG).show();
+                et_team1.setText("");
+                et_team2.setText("");
             }
         });
     }
 
+    public void addMatchesToLeague()
+    {
+        batchInput.addAllMatchesToLeague();
+    }
     public void setUpVariables() {
         et_team1 = (EditText) findViewById(R.id.et_team1);
         et_team2 = (EditText) findViewById(R.id.et_team2);
         batchInput = new BatchInput();
         listView = (ListView) findViewById(R.id.listView);
     }
-//    public void setUpDialog()
-//    {
-//        batch_input_dialog.setContentView(R.layout.dialog_batch_input);
-//        match_title = (TextView) batch_input_dialog.findViewById(R.id.title_match);
-//        match_title.setText(team1.getName() + " VS. " + team2.getName());
-//        radio_team1 = (RadioButton) batch_input_dialog.findViewById(R.id.radio_team1);
-//        radio_team2 = (RadioButton) batch_input_dialog.findViewById(R.id.radio_team2);
-//        team1_score = (TextView) batch_input_dialog.findViewById(R.id.tv_team1_score);
-//        team2_score = (TextView) batch_input_dialog.findViewById(R.id.tv_team2_score);
-//        save_match = (Button) batch_input_dialog.findViewById(R.id.save_match);
-//        increment_score = (Button) batch_input_dialog.findViewById(R.id.increment_score);
-//        select_team = (RadioGroup) batch_input_dialog.findViewById(R.id.select_team);
-//    }
 
     public static int findTeamID(String str) {
         for (Team team : league) {
@@ -179,7 +167,7 @@ public class BatchInputActivity extends AppCompatActivity {
         return true;
     }
 
-    public class TeamAdapter extends ArrayAdapter<Team>
+    private class TeamAdapter extends ArrayAdapter<Team>
     {
         private List<Team> league_team;
         private Context context;
@@ -204,19 +192,4 @@ public class BatchInputActivity extends AppCompatActivity {
             return convertView;
         }
     }
-
-//
-//    public void closeDialogBatchInput(View view)
-//    {
-//        batch_input_dialog.dismiss();
-//    }
-//
-//    public void incrementScore(View view)
-//    {
-//        int selectedID = select_team.getCheckedRadioButtonId();
-//        switch (selectedID)
-//        {
-//            case (R.id.radio_team1):
-//        }
-//    }
 }

@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:background="@drawable/background_blurry"
     android:gravity="center|top"
-    android:id="@+id/live_input_dialog_layout">
+    android:id="@+id/live_input_dialog_layout"
+    android:padding="16dp">
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -16,26 +17,36 @@
         android:layout_gravity="right|top"
         android:layout_margin="16dp" />
 
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="286dp"
+        android:id="@+id/listView"
+        android:background="@drawable/sign_in_background">
+
+
+    </ListView>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:background="@drawable/sign_in_background">
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Team 1"
+            android:hint="ID Team 1"
             android:id="@+id/et_team1"
-            android:layout_marginLeft="16dp" />
+            android:inputType="number"/>
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/et_team2"
-            android:hint="Team 2"
-            android:layout_marginRight="16dp"
-            android:layout_gravity="right" />
+            android:hint="ID Team 2"
+            android:inputType="number"/>
 
     </LinearLayout>
 
@@ -45,6 +56,6 @@
         android:text="Create a new match"
         android:onClick="createNewMatch"
         android:id="@+id/create_new_match_button_live_dialog"
-        android:backgroundTint="@android:color/transparent" />
+        android:background="#d28c38" />
 
 </LinearLayout>

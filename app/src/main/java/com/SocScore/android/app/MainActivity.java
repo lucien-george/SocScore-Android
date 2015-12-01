@@ -6,11 +6,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.SocScore.framework.data.LeagueAnalysis;
+import com.SocScore.framework.data.Team;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,8 +33,12 @@ public class MainActivity extends AppCompatActivity {
     private EditText add_team2;
     private Button submitTeamLive;
     private ImageButton close_input_dialog;
-    String str_team1;
-    String str_team2;
+    private String str_team1_ID;
+    private String str_team2_ID;
+    private ListView listView;
+    private static List<Team> league = new ArrayList<>();
+    private final ArrayList<Integer> team_ID_array = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
         setUpDialog();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.inflateMenu(R.menu.menu_main);
+        league = LeagueAnalysis.getLeague();
+        TeamAdapter teamAdapter = new TeamAdapter(league , MainActivity.this);
+        listView.setAdapter(teamAdapter);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
@@ -75,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
         create_new_match_live_button = (Button) live_input_dialog.findViewById(R.id.create_new_match_button_live_dialog);
         add_team1 = (EditText) live_input_dialog.findViewById(R.id.et_team1);
         add_team2 = (EditText) live_input_dialog.findViewById(R.id.et_team2);
+        listView = (ListView) live_input_dialog.findViewById(R.id.listView);
     }
 
     public void setUpVariables()
@@ -107,16 +126,20 @@ public class MainActivity extends AppCompatActivity {
 
     public void createNewMatch(View view)
     {
-        str_team1 = add_team1.getText().toString();
-        str_team2 = add_team2.getText().toString();
+        for(Team team : league)
+        {
+            team_ID_array.add(team.getTEAM_ID());
+        }
+        str_team1_ID = add_team1.getText().toString();
+        str_team2_ID = add_team2.getText().toString();
 //        Team team1 = new Team(team_1);
 //        Team team2 = new Team(team_2);
 //        LiveInput live_input = new LiveInput();
 //        live_input.createMatch(team1, team2);
 //        live_match_dialog.show();
         Intent live_match_activity = new Intent(this, LiveMatchActivity.class);
-        live_match_activity.putExtra("team1" , str_team1);
-        live_match_activity.putExtra("team2" , str_team2);
+        live_match_activity.putExtra("str_team1_ID" , str_team1_ID);
+        live_match_activity.putExtra("str_team2_ID" , str_team2_ID);
         live_input_dialog.dismiss();
         startActivity(live_match_activity);
 //        tv_team1.setText(team_1);
@@ -130,5 +153,31 @@ public class MainActivity extends AppCompatActivity {
     {
         Intent analysisViewer = new Intent(this , AnalysisViewerActivity.class);
         startActivity(analysisViewer);
+    }
+
+    private class TeamAdapter extends ArrayAdapter<Team>
+    {
+        private List<Team> league_team;
+        private Context context;
+        public TeamAdapter(List<Team> league , Context ctx)
+        {
+            super(ctx, R.layout.list_view_layout, league);
+            this.league_team = league;
+            this.context = ctx;
+        }
+        public View getView(int position , View convertView , ViewGroup parent)
+        {
+            if(convertView == null)
+            {
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = inflater.inflate(R.layout.list_view_layout , parent , false);
+            }
+            TextView tv_name = (TextView) convertView.findViewById(R.id.team_name);
+            TextView tv_id = (TextView) convertView.findViewById(R.id.team_id);
+            Team team = league_team.get(position);
+            tv_name.setText(team.getName());
+            tv_id.setText("ID : " + team.getTEAM_ID());
+            return convertView;
+        }
     }
 }
