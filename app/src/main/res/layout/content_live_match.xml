@@ -3,7 +3,6 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="32dp"
     android:background="@drawable/background_blurry">
 
     <ScrollView
@@ -78,34 +77,15 @@
 
             </LinearLayout>
 
-            <RadioGroup
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:orientation="vertical"
-                android:id="@+id/select_team">
-
-                <RadioButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:id="@+id/radio_team1"/>
-
-                <RadioButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:id="@+id/radio_team2"
-                    android:layout_marginTop="10dp" />
-            </RadioGroup>
-
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="  Player's name"
                 android:layout_marginTop="16dp"
                 android:id="@+id/et_player_match"
-                android:background="@drawable/sign_in_background"/>
+                android:background="@drawable/sign_in_background"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp" />
 
             <RadioGroup
                 android:layout_width="match_parent"
@@ -156,6 +136,15 @@
                 android:layout_marginTop="10dp"
                 android:text="Assign to player"
                 android:onClick="assignFeatureToPlayer"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#d28c38"
+                android:id="@+id/end_match"
+                android:layout_marginTop="10dp"
+                android:text="End match"
+                android:onClick="endMatch"/>
         </LinearLayout>
 
     </ScrollView>

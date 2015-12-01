@@ -51,16 +51,16 @@ public class LiveMatchActivity extends AppCompatActivity {
     private Team team1;
     private Team team2;
     private LiveInput liveInput;
-    private RadioButton radio_team1;
-    private RadioButton radio_team2;
+//    private RadioButton radio_team1;
+//    private RadioButton radio_team2;
     private TextView team1_score;
     private TextView team2_score;
     private Button increment_score;
-    private RadioGroup select_team;
-    private RadioButton radio_shots;
-    private RadioButton radio_yellow;
-    private RadioButton radio_red;
-    private RadioButton radio_penalty;
+//    private RadioGroup select_team;
+    private RadioButton rd_radio_shots;
+    private RadioButton rd_radio_yellow;
+    private RadioButton rd_radio_red;
+    private RadioButton rd_radio_penalty;
     private RadioGroup add_feature;
     private EditText et_player_name;
     private Match match;
@@ -112,8 +112,13 @@ public class LiveMatchActivity extends AppCompatActivity {
         team2 = LeagueAnalysis.findTeam(int_team2_ID);
         str_team1 = team1.getName();
         str_team2 = team2.getName();
-        radio_team1.setText(str_team1);
-        radio_team2.setText(str_team2);
+//        radio_team1.setText(str_team1);
+//        radio_team2.setText(str_team2);
+        if(team1.getPlayers().size() < 11 || team2.getPlayers().size() < 11)
+        {
+            Intent main = new Intent(this , MainActivity.class);
+            startActivity(main);
+        }
         liveInput.createMatch(team1, team2);
         liveInput.startMatch();
         context = LiveMatchActivity.this;
@@ -128,17 +133,17 @@ public class LiveMatchActivity extends AppCompatActivity {
         AccessManager.authenticate(1234);
         liveInput= (LiveInput) AccessManager.setInputType(ScoreKeeperType.LIVE_INPUT);
         chrono = (Chronometer) findViewById(R.id.chronometer);
-        select_team = (RadioGroup) findViewById(R.id.select_team);
+//        select_team = (RadioGroup) findViewById(R.id.select_team);
         team1_score = (TextView) findViewById(R.id.tv_team1_score);
         team2_score = (TextView) findViewById(R.id.tv_team2_score);
         increment_score = (Button) findViewById(R.id.increment_score);
-        radio_team1 = (RadioButton) findViewById(R.id.radio_team1);
-        radio_team2 = (RadioButton) findViewById(R.id.radio_team2);
-        radio_shots = (RadioButton) findViewById(R.id.radio_shots);
-        radio_yellow = (RadioButton) findViewById(R.id.radio_yellow);
-        radio_red = (RadioButton) findViewById(R.id.radio_red);
+//        radio_team1 = (RadioButton) findViewById(R.id.radio_team1);
+//        radio_team2 = (RadioButton) findViewById(R.id.radio_team2);
+        rd_radio_shots = (RadioButton) findViewById(R.id.radio_shots);
+        rd_radio_yellow = (RadioButton) findViewById(R.id.radio_yellow);
+        rd_radio_red = (RadioButton) findViewById(R.id.radio_red);
         et_player_name = (EditText) findViewById(R.id.et_player_match);
-        radio_penalty = (RadioButton) findViewById(R.id.radio_penalty);
+        rd_radio_penalty = (RadioButton) findViewById(R.id.radio_penalty);
 
     }
 
@@ -186,7 +191,7 @@ public class LiveMatchActivity extends AppCompatActivity {
             {
                 int i = count1++;
                 team1_score.setText("" + i);
-                player.shoots(new LocalDateTime(), true , liveInput.getCurrentMatch().getMATCH_ID());
+                liveInput.shoots(player.getPLAYER_ID() , true , new LocalDateTime());
             }
         }
         for(Player player : players_team2)
@@ -195,7 +200,7 @@ public class LiveMatchActivity extends AppCompatActivity {
             {
                 int j = count2++;
                 team2_score.setText("" + j);
-                player.shoots(new LocalDateTime() , true , liveInput.getCurrentMatch().getMATCH_ID());
+                liveInput.shoots(player.getPLAYER_ID() , true , new LocalDateTime());
             }
         }
         et_player_name.setText("");
@@ -205,92 +210,72 @@ public class LiveMatchActivity extends AppCompatActivity {
         List<Player> players_team1 = team1.getPlayers();
         List<Player> players_team2 = team2.getPlayers();
         String str_player_name = et_player_name.getText().toString();
-        int selectedID = select_team.getCheckedRadioButtonId();
         int selectedID2 = add_feature.getCheckedRadioButtonId();
-        switch (selectedID)
+        switch (selectedID2)
         {
-            case R.id.radio_team1:
-                switch (selectedID2)
-                {
-                    case R.id.radio_shots:
-                        for(Player player : players_team1)
-                        {
-                            if(str_player_name.equalsIgnoreCase(player.getPLAYER_NAME()))
-                            {
-                                player.shoots(new LocalDateTime() , false , liveInput.getCurrentMatch().getMATCH_ID());
-                            }
-                        }
-                    case R.id.radio_yellow:
-                        for(Player player : players_team1)
-                        {
-                            if(str_player_name.equalsIgnoreCase(player.getPLAYER_NAME()))
-                            {
-                                player.commitsInfraction(InfractionType.YELLOW_CARD , new LocalDateTime() , liveInput.getCurrentMatch().getMATCH_ID());
-                                Toast.makeText(getApplicationContext(), "Yellow card assigned to " + player.getPLAYER_NAME() , Toast.LENGTH_LONG).show();
-
-                            }
-                        }
-                    case R.id.radio_red:
-                        for(Player player : players_team1)
-                        {
-                            if(str_player_name.equalsIgnoreCase(player.getPLAYER_NAME()))
-                            {
-                                player.commitsInfraction(InfractionType.RED_CARD , new LocalDateTime() , liveInput.getCurrentMatch().getMATCH_ID());
-                                Toast.makeText(getApplicationContext(), "Red card assigned to " + player.getPLAYER_NAME() , Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    case R.id.radio_penalty:
-                        for(Player player : players_team1)
-                        {
-                            if(str_player_name.equalsIgnoreCase(player.getPLAYER_NAME()))
-                            {
-                                player.commitsInfraction(InfractionType.PENALTY , new LocalDateTime() , liveInput.getCurrentMatch().getMATCH_ID());
-                                Toast.makeText(getApplicationContext(), "Penalty card assigned to " + player.getPLAYER_NAME() , Toast.LENGTH_LONG).show();
-                            }
-                        }
+            case (R.id.radio_shots):
+                for (Player player : players_team1) {
+                    if (str_player_name.equalsIgnoreCase(player.getPLAYER_NAME())) {
+                        liveInput.shoots(player.getPLAYER_ID(), false, new LocalDateTime());
+                    }
                 }
-            case R.id.radio_team2:
-                switch (selectedID2)
-                {
-                    case R.id.radio_shots:
-                        for(Player player : players_team2)
-                        {
-                            if(str_player_name.equalsIgnoreCase(player.getPLAYER_NAME()))
-                            {
-                                player.shoots(new LocalDateTime() ,false , liveInput.getCurrentMatch().getMATCH_ID());
-                            }
-                        }
-                    case R.id.radio_yellow:
-                        for(Player player : players_team2)
-                        {
-                            if(str_player_name.equalsIgnoreCase(player.getPLAYER_NAME()))
-                            {
-                                player.commitsInfraction(InfractionType.YELLOW_CARD , new LocalDateTime() , liveInput.getCurrentMatch().getMATCH_ID());
-                                Toast.makeText(getApplicationContext(), "Yellow card assigned to " + player.getPLAYER_NAME() , Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    case R.id.radio_red:
-                        for(Player player : players_team2)
-                        {
-                            if(str_player_name.equalsIgnoreCase(player.getPLAYER_NAME()))
-                            {
-                                player.commitsInfraction(InfractionType.RED_CARD , new LocalDateTime() , liveInput.getCurrentMatch().getMATCH_ID());
-                                Toast.makeText(getApplicationContext(), "Red card assigned to " + player.getPLAYER_NAME() , Toast.LENGTH_LONG).show();
-
-                            }
-                        }
-                    case R.id.radio_penalty:
-                        for(Player player : players_team2)
-                        {
-                            if(str_player_name.equalsIgnoreCase(player.getPLAYER_NAME()))
-                            {
-                                player.commitsInfraction(InfractionType.PENALTY , new LocalDateTime() , liveInput.getCurrentMatch().getMATCH_ID());
-                                Toast.makeText(getApplicationContext(), "Penalty card assigned to " + player.getPLAYER_NAME() , Toast.LENGTH_LONG).show();
-
-                            }
-                        }
+                for (Player player : players_team2) {
+                    if (str_player_name.equalsIgnoreCase(player.getPLAYER_NAME())) {
+                        liveInput.shoots(player.getPLAYER_ID(), false, new LocalDateTime());
+                    }
                 }
+                break;
+            case (R.id.radio_yellow):
+                for (Player player : players_team1) {
+                    if (str_player_name.equalsIgnoreCase(player.getPLAYER_NAME())) {
+                        liveInput.addInfraction(player.getPLAYER_ID(), InfractionType.YELLOW_CARD, new LocalDateTime());
+                        Toast.makeText(getApplicationContext(), "Yellow card assigned to " + player.getPLAYER_NAME(), Toast.LENGTH_LONG).show();
 
+                    }
+                }
+                for (Player player : players_team2) {
+                    if (str_player_name.equalsIgnoreCase(player.getPLAYER_NAME())) {
+                        liveInput.addInfraction(player.getPLAYER_ID(), InfractionType.YELLOW_CARD, new LocalDateTime());
+                        Toast.makeText(getApplicationContext(), "Yellow card assigned to " + player.getPLAYER_NAME(), Toast.LENGTH_LONG).show();
+                    }
+                }
+                break;
+            case (R.id.radio_red):
+                for (Player player : players_team1) {
+                    if (str_player_name.equalsIgnoreCase(player.getPLAYER_NAME())) {
+                        liveInput.addInfraction(player.getPLAYER_ID(), InfractionType.RED_CARD, new LocalDateTime());
+                        Toast.makeText(getApplicationContext(), "Red card assigned to " + player.getPLAYER_NAME(), Toast.LENGTH_LONG).show();
+                    }
+                }
+                for (Player player : players_team2) {
+                    if (str_player_name.equalsIgnoreCase(player.getPLAYER_NAME())) {
+                        liveInput.addInfraction(player.getPLAYER_ID(), InfractionType.RED_CARD, new LocalDateTime());
+                        Toast.makeText(getApplicationContext(), "Red card assigned to " + player.getPLAYER_NAME(), Toast.LENGTH_LONG).show();
+                    }
+                }
+                break;
+            case (R.id.radio_penalty):
+                for (Player player : players_team1) {
+                    if (str_player_name.equalsIgnoreCase(player.getPLAYER_NAME())) {
+                        liveInput.addInfraction(player.getPLAYER_ID(), InfractionType.PENALTY, new LocalDateTime());
+                        Toast.makeText(getApplicationContext(), "Penalty card assigned to " + player.getPLAYER_NAME(), Toast.LENGTH_LONG).show();
+                    }
+                }
+                for (Player player : players_team2) {
+                    if (str_player_name.equalsIgnoreCase(player.getPLAYER_NAME())) {
+                        liveInput.addInfraction(player.getPLAYER_ID(), InfractionType.PENALTY, new LocalDateTime());
+                        Toast.makeText(getApplicationContext(), "Penalty card assigned to " + player.getPLAYER_NAME(), Toast.LENGTH_LONG).show();
+                    }
+                }
+                break;
         }
+
+    }
+
+    public void endMatch(View view)
+    {
+        liveInput.endMatch();
+        Intent main = new Intent(this , MainActivity.class);
+        startActivity(main);
     }
 }

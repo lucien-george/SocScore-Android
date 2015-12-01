@@ -53,7 +53,7 @@ public class AnalysisViewerActivity extends AppCompatActivity {
             case (R.id.rank_team_id) :
                 Intent teamIDActivity = new Intent(this, AnalysisViewerTeamIDActivity.class);
                 startActivity(teamIDActivity);
-            case (R.id.rank_team_score) :;
+            case (R.id.rank_team_score) :
                 league = analysisViewer.getLeague(TeamRankType.TEAM_SCORE);
                 ArrayList<String> rank_team_score = new ArrayList<>();
                 for(Team team : league)
