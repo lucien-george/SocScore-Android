@@ -1,16 +1,26 @@
 package com.SocScore.android.app;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.SocScore.framework.LeagueInput;
 import com.SocScore.framework.data.LeagueAnalysis;
+import com.SocScore.framework.data.Player;
 import com.SocScore.framework.data.Team;
 
 import java.util.ArrayList;
@@ -23,7 +33,7 @@ public class LeagueInputActivity extends AppCompatActivity {
     private Button add_team;
     private Button remove_team;
     private String str_add_remove_team;
-    private static List<Team> league = new ArrayList<>();
+    private List<Team> league = new ArrayList<>();
     private Button add_player;
     private EditText add_player_name;
     private EditText add_player_ID;
@@ -42,6 +52,9 @@ public class LeagueInputActivity extends AppCompatActivity {
     private EditText et_remove_match_id;
     private Button remove_match;
     private int int_remove_match_id;
+    private Spinner spinner_team;
+    private Team team;
+    private int team_id;
 
 
     @Override
@@ -49,6 +62,9 @@ public class LeagueInputActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_league_input);
         setUpVariables();
+        league = LeagueAnalysis.getLeague();
+        spinner_team.setAdapter(new SpinnerAdapter(LeagueInputActivity.this , R.layout.custom_spinner , league));
+        spinnerTeam();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.inflateMenu(R.menu.menu_league);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -60,18 +76,13 @@ public class LeagueInputActivity extends AppCompatActivity {
                         startActivity(leagueInput);
                         return true;
 
-                    case R.id.action_live:
-                        Intent liveInput = new Intent(LeagueInputActivity.this, LiveMatchActivity.class);
-                        startActivity(liveInput);
-                        return true;
-
                     case R.id.action_main:
                         Intent batchInput = new Intent(LeagueInputActivity.this, MainActivity.class);
                         startActivity(batchInput);
                         return true;
 
                     case R.id.access_analysis_viewer:
-                        Intent analysisViewer = new Intent(LeagueInputActivity.this , AnalysisViewerActivity.class);
+                        Intent analysisViewer = new Intent(LeagueInputActivity.this, AnalysisViewerActivity.class);
                         startActivity(analysisViewer);
                         return true;
 
@@ -103,6 +114,22 @@ public class LeagueInputActivity extends AppCompatActivity {
         leagueInput.loadDataFromDisk();
     }
 
+    public void spinnerTeam()
+    {
+        spinner_team.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                team = (Team) spinner_team.getSelectedItem();
+                team_id = team.getTEAM_ID();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
 
     public void setUpVariables()
     {
@@ -111,7 +138,7 @@ public class LeagueInputActivity extends AppCompatActivity {
         remove_team = (Button) findViewById(R.id.remove_team);
         add_player = (Button) findViewById(R.id.add_player);
         add_player_name = (EditText) findViewById(R.id.et_add_player_name);
-        add_player_ID = (EditText) findViewById(R.id.et_add_player_id);
+//        add_player_ID = (EditText) findViewById(R.id.et_add_player_id);
         et_transfer_player_id = (EditText) findViewById(R.id.et_transfer_player);
         et_old_team_id = (EditText) findViewById(R.id.et_old_team_id);
         et_new_team_id = (EditText) findViewById(R.id.et_new_team_id);
@@ -120,30 +147,48 @@ public class LeagueInputActivity extends AppCompatActivity {
         remove_player = (Button) findViewById(R.id.remove_player);
         et_remove_match_id = (EditText) findViewById(R.id.et_match_id);
         remove_match = (Button)  findViewById(R.id.remove_match);
+        spinner_team = (Spinner) findViewById(R.id.spinner_teams);
     }
 
     public void addTeamToLeague(View view)
     {
         str_add_remove_team = et_add_remove_team.getText().toString();
+
+        for(Team team : league)
+        {
+            if (str_add_remove_team.equalsIgnoreCase(team.getName()))
+            {
+                Toast.makeText(getApplicationContext(), "Team is already in league" , Toast.LENGTH_LONG).show();
+                return;
+            }
+
+        }
+        if(str_add_remove_team.matches(""))
+        {
+            Toast.makeText(getApplicationContext(), "Field is empty, enter a team's name please", Toast.LENGTH_LONG).show();
+            return;
+        }
         leagueInput.addTeamToLeague(str_add_remove_team);
         et_add_remove_team.setText("");
+        finish();
+        startActivity(getIntent());
     }
 
-    public static int findTeamID(String str)
+    public int findTeamID(String str)
     {
-        league = LeagueAnalysis.getLeague();
         for(Team team : league)
         {
             if(team.getName().equalsIgnoreCase(str))
             {
                 return team.getTEAM_ID();
             }
-            throw new NullPointerException("Could not find team: " + str);
+            Toast.makeText(getApplicationContext(), "Could not find team: " + str, Toast.LENGTH_LONG).show();
+
         }
         return -1;
     }
 
-    public static boolean foundTeam(String str)
+    public boolean foundTeam(String str)
     {
         if (findTeamID(str) == -1)
         {
@@ -161,7 +206,7 @@ public class LeagueInputActivity extends AppCompatActivity {
         }
         else
         {
-            throw new NullPointerException("Could not find team: " + str_add_remove_team);
+            Toast.makeText(getApplicationContext(), "Could not find team: " + str_add_remove_team, Toast.LENGTH_LONG).show();
         }
         et_add_remove_team.setText("");
     }
@@ -169,10 +214,22 @@ public class LeagueInputActivity extends AppCompatActivity {
     public void addPlayerToTeam(View view)
     {
         str_name = add_player_name.getText().toString();
-        ID = Integer.parseInt(add_player_ID.getText().toString());
-        leagueInput.addNewPlayerToTeam(str_name, ID);
+        List<Player> players = LeagueAnalysis.findTeam(team_id).getPlayers();
+        for (Player player : players)
+        {
+            if(str_name.equalsIgnoreCase(player.getPLAYER_NAME()))
+            {
+                Toast.makeText(getApplicationContext() , "Player is already in the selected team" , Toast.LENGTH_LONG).show();
+                return;
+            }
+        }
+        if(str_name.matches(""))
+        {
+            Toast.makeText(getApplicationContext(), "Field is empty, enter a player's name please", Toast.LENGTH_LONG).show();
+            return;
+        }
+        leagueInput.addNewPlayerToTeam(str_name, team_id);
         add_player_name.setText("");
-        add_player_ID.setText("");
     }
 
     public void transferPlayer(View view)
@@ -198,5 +255,40 @@ public class LeagueInputActivity extends AppCompatActivity {
         int_remove_match_id = Integer.parseInt(et_remove_match_id.getText().toString());
         leagueInput.removeMatchFromLeague(int_remove_match_id);
         et_remove_match_id.setText("");
+    }
+
+    public class SpinnerAdapter extends ArrayAdapter {
+        private List<Team> teams;
+        private Context ctx;
+        private int layout_id;
+        public SpinnerAdapter(Context context, int textViewResourceId, List<Team> team_list) {
+            super(context, textViewResourceId, team_list);
+            this.ctx = context;
+            this.teams = team_list;
+            this.layout_id = textViewResourceId;
+
+        }
+
+        public View getCustomView(int position, View convertView, ViewGroup parent) {
+            LayoutInflater inflater = getLayoutInflater();
+            View layout;
+            layout = inflater.inflate(R.layout.custom_spinner_first_position, parent, false);
+            final TextView tv_player_spinner = (TextView) layout.findViewById(R.id.tv_player_spinner);
+            Team team = teams.get(position);
+            tv_player_spinner.setText(team.getName());
+            tv_player_spinner.setTextColor(Color.BLACK);
+
+            return layout;
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+            return getCustomView(position, convertView, parent);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            return getCustomView(position, convertView, parent);
+        }
     }
 }

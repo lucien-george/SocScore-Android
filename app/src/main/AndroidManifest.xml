@@ -54,6 +54,14 @@
         <activity
             android:name=".AnalysisViewerTeamIDActivity"
             android:label="@string/title_activity_analysis_viewer_team_id"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".AnalysisViewerTeamScoreActivity"
+            android:label="@string/title_activity_analysis_viewer_team_score"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".AnalysisViewerTeamGoalsActivity"
+            android:label="@string/title_activity_analysis_viewer_team_goals"
             android:theme="@style/AppTheme"></activity>
     </application>
 

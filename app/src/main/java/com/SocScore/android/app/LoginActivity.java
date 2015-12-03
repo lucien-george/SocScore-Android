@@ -110,7 +110,7 @@ public class LoginActivity extends AppCompatActivity {
         //displays error message for username or password
         else
         {
-            error.setText("Incorrect Username or Password");
+            error.setText("Incorrect password");
             password_forgotten(password_forgotten);
         }
     }

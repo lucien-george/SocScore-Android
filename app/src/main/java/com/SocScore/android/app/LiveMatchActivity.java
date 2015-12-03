@@ -3,17 +3,23 @@ package com.SocScore.android.app;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +33,7 @@ import com.SocScore.framework.scorekeeper.ScoreKeeperType;
 
 import org.joda.time.LocalDateTime;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LiveMatchActivity extends AppCompatActivity {
@@ -42,20 +49,24 @@ public class LiveMatchActivity extends AppCompatActivity {
     private Team team1;
     private Team team2;
     private LiveInput liveInput;
-//    private RadioButton radio_team1;
-//    private RadioButton radio_team2;
     private TextView team1_score;
     private TextView team2_score;
     private Button increment_score;
-//    private RadioGroup select_team;
     private RadioButton rd_radio_shots;
     private RadioButton rd_radio_yellow;
     private RadioButton rd_radio_red;
     private RadioButton rd_radio_penalty;
     private RadioGroup add_feature;
-    private EditText et_player_name;
+//    private EditText et_player_name;
     private static int count1 = 1;
     private static int count2 = 1;
+    private List<Player> players1 = new ArrayList<>();
+    private List<Player> players2 = new ArrayList<>();
+
+    private Spinner player_spinner_Team1;
+    private Spinner player_spinner_Team2;
+    private String str_player_name1;
+    private String str_player_name2;
 
 
     @Override
@@ -63,6 +74,7 @@ public class LiveMatchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_live_match);
         setUpVariables();
+        chrono.start();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.inflateMenu(R.menu.menu_live);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -100,22 +112,21 @@ public class LiveMatchActivity extends AppCompatActivity {
         int int_team2_ID = Integer.parseInt(getIntent().getStringExtra("str_team2_ID"));
         team1 = LeagueAnalysis.findTeam(int_team1_ID);
         team2 = LeagueAnalysis.findTeam(int_team2_ID);
+        players1 = team1.getPlayers();
+        players2 = team2.getPlayers();
+        player_spinner_Team1.setAdapter(new SpinnerAdapter(LiveMatchActivity.this, R.layout.custom_spinner, players1));
+        player_spinner_Team2.setAdapter(new SpinnerAdapter(LiveMatchActivity.this, R.layout.custom_spinner, players2));
+        playerSpinnerTeam1();
+        playerSpinnerTeam2();
         str_team1 = team1.getName();
         str_team2 = team2.getName();
-//        radio_team1.setText(str_team1);
-//        radio_team2.setText(str_team2);
-        if(team1.getPlayers().size() < 11 || team2.getPlayers().size() < 11)
+        if(team1.getPlayers().size() < 2 || team2.getPlayers().size() < 2)
         {
             Intent main = new Intent(this , MainActivity.class);
             startActivity(main);
         }
         liveInput.createMatch(team1, team2);
         liveInput.startMatch();
-        context = LiveMatchActivity.this;
-        dialog = new Dialog(context);
-        dialog.setContentView(R.layout.dialog_add_players);
-        setUpDialog();
-        //dialog.show();
     }
 
     public void setUpVariables() {
@@ -123,123 +134,100 @@ public class LiveMatchActivity extends AppCompatActivity {
         AccessManager.authenticate(1234);
         liveInput= (LiveInput) AccessManager.setInputType(ScoreKeeperType.LIVE_INPUT);
         chrono = (Chronometer) findViewById(R.id.chronometer);
-//        select_team = (RadioGroup) findViewById(R.id.select_team);
         team1_score = (TextView) findViewById(R.id.tv_team1_score);
         team2_score = (TextView) findViewById(R.id.tv_team2_score);
-        increment_score = (Button) findViewById(R.id.increment_score);
-//        radio_team1 = (RadioButton) findViewById(R.id.radio_team1);
-//        radio_team2 = (RadioButton) findViewById(R.id.radio_team2);
+        increment_score = (Button) findViewById(R.id.increment_score_team1);
         rd_radio_shots = (RadioButton) findViewById(R.id.radio_shots);
         rd_radio_yellow = (RadioButton) findViewById(R.id.radio_yellow);
         rd_radio_red = (RadioButton) findViewById(R.id.radio_red);
-        et_player_name = (EditText) findViewById(R.id.et_player_match);
+//        et_player_name = (EditText) findViewById(R.id.et_player_match);
         rd_radio_penalty = (RadioButton) findViewById(R.id.radio_penalty);
         add_feature = (RadioGroup) findViewById(R.id.add_feature);
+        player_spinner_Team1 = (Spinner) findViewById(R.id.spinner_player_team1);
+        player_spinner_Team2 = (Spinner) findViewById(R.id.spinner_player_team2);
+
 
     }
 
-    public void setUpDialog()
+    public void playerSpinnerTeam1()
     {
-        close_dialog = (ImageButton) dialog.findViewById(R.id.close_dialog);
-        add_player_to_team = (EditText) dialog.findViewById(R.id.et_add_player);
-        add_to_team1 = (Button) dialog.findViewById(R.id.add_to_team1);
-        add_to_team2 = (Button) dialog.findViewById(R.id.add_to_team2);
-        add_to_team1.setText(str_team1);
-        add_to_team2.setText(str_team2);
+        player_spinner_Team1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Player player = (Player) player_spinner_Team1.getSelectedItem();
+                str_player_name1 = player.getPLAYER_NAME();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
-
-    public void addToTeam1(View view)
+    public void playerSpinnerTeam2()
     {
-        team1.addPlayer(new Player(add_player_to_team.getText().toString(), team1.getTEAM_ID()));
-        add_player_to_team.setText("");
+        player_spinner_Team2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Player player = (Player) player_spinner_Team2.getSelectedItem();
+                str_player_name2 = player.getPLAYER_NAME();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
-    public void addToTeam2(View view)
-    {
-        team2.addPlayer(new Player(add_player_to_team.getText().toString(), team2.getTEAM_ID()));
-        add_player_to_team.setText("");
-    }
-
-    public void closeDialog(View view)
-    {
-        dialog.dismiss();
-        chrono.start();
-    }
 
     //TODO: add player to team
     //TODO: Create Match in LiveInput
 
 
-    public void incrementScore(View view)
+    public void incrementScoreTeam1(View view)
     {
         List<Player> players_team1 = team1.getPlayers();
-        List<Player> players_team2 = team2.getPlayers();
-        String str_player_name = et_player_name.getText().toString();
         for(Player player : players_team1)
         {
-            if(str_player_name.equalsIgnoreCase(player.getPLAYER_NAME()))
+            if(str_player_name1.equalsIgnoreCase(player.getPLAYER_NAME()))
             {
                 int i = count1++;
                 team1_score.setText("" + i);
                 liveInput.shoots(player.getPLAYER_ID() , true , new LocalDateTime());
             }
         }
-        for(Player player : players_team2)
-        {
-            if(str_player_name.equalsIgnoreCase(player.getPLAYER_NAME()))
-            {
-                int j = count2++;
-                team2_score.setText("" + j);
-                liveInput.shoots(player.getPLAYER_ID() , true , new LocalDateTime());
-            }
-        }
-        et_player_name.setText("");
+//        et_player_name.setText("");
     }
 
-    public void assignFeatureToPlayer(View view) {
+    public void assignFeatureToPlayer1(View view) {
         List<Player> players_team1 = team1.getPlayers();
-        List<Player> players_team2 = team2.getPlayers();
-        String str_player_name = et_player_name.getText().toString();
         int selectedID = add_feature.getCheckedRadioButtonId();
         switch (selectedID)
         {
             case (R.id.radio_shots):
                 for (Player player : players_team1) {
-                    if (str_player_name.equalsIgnoreCase(player.getPLAYER_NAME())) {
+                    if (str_player_name1.equalsIgnoreCase(player.getPLAYER_NAME())) {
                         liveInput.shoots(player.getPLAYER_ID(), false, new LocalDateTime());
-                    }
-                }
-                for (Player player : players_team2) {
-                    if (str_player_name.equalsIgnoreCase(player.getPLAYER_NAME())) {
-                        liveInput.shoots(player.getPLAYER_ID(), false, new LocalDateTime());
+                        Toast.makeText(getApplicationContext(), player.getPLAYER_NAME() + " took his chance and shot!! Unfortunately he did not score", Toast.LENGTH_LONG).show();
                     }
                 }
                 break;
             case (R.id.radio_yellow):
                 for (Player player : players_team1) {
-                    if (str_player_name.equalsIgnoreCase(player.getPLAYER_NAME())) {
+                    if (str_player_name1.equalsIgnoreCase(player.getPLAYER_NAME())) {
                         liveInput.addInfraction(player.getPLAYER_ID(), InfractionType.YELLOW_CARD, new LocalDateTime());
                         Toast.makeText(getApplicationContext(), "Yellow card assigned to " + player.getPLAYER_NAME(), Toast.LENGTH_LONG).show();
 
                     }
                 }
-                for (Player player : players_team2) {
-                    if (str_player_name.equalsIgnoreCase(player.getPLAYER_NAME())) {
-                        liveInput.addInfraction(player.getPLAYER_ID(), InfractionType.YELLOW_CARD, new LocalDateTime());
-                        Toast.makeText(getApplicationContext(), "Yellow card assigned to " + player.getPLAYER_NAME(), Toast.LENGTH_LONG).show();
-                    }
-                }
                 break;
             case (R.id.radio_red):
                 for (Player player : players_team1) {
-                    if (str_player_name.equalsIgnoreCase(player.getPLAYER_NAME())) {
-                        liveInput.addInfraction(player.getPLAYER_ID(), InfractionType.RED_CARD, new LocalDateTime());
-                        Toast.makeText(getApplicationContext(), "Red card assigned to " + player.getPLAYER_NAME(), Toast.LENGTH_LONG).show();
-                    }
-                }
-                for (Player player : players_team2) {
-                    if (str_player_name.equalsIgnoreCase(player.getPLAYER_NAME())) {
+                    if (str_player_name1.equalsIgnoreCase(player.getPLAYER_NAME())) {
                         liveInput.addInfraction(player.getPLAYER_ID(), InfractionType.RED_CARD, new LocalDateTime());
                         Toast.makeText(getApplicationContext(), "Red card assigned to " + player.getPLAYER_NAME(), Toast.LENGTH_LONG).show();
                     }
@@ -247,13 +235,7 @@ public class LiveMatchActivity extends AppCompatActivity {
                 break;
             case (R.id.radio_penalty):
                 for (Player player : players_team1) {
-                    if (str_player_name.equalsIgnoreCase(player.getPLAYER_NAME())) {
-                        liveInput.addInfraction(player.getPLAYER_ID(), InfractionType.PENALTY, new LocalDateTime());
-                        Toast.makeText(getApplicationContext(), "Penalty card assigned to " + player.getPLAYER_NAME(), Toast.LENGTH_LONG).show();
-                    }
-                }
-                for (Player player : players_team2) {
-                    if (str_player_name.equalsIgnoreCase(player.getPLAYER_NAME())) {
+                    if (str_player_name1.equalsIgnoreCase(player.getPLAYER_NAME())) {
                         liveInput.addInfraction(player.getPLAYER_ID(), InfractionType.PENALTY, new LocalDateTime());
                         Toast.makeText(getApplicationContext(), "Penalty card assigned to " + player.getPLAYER_NAME(), Toast.LENGTH_LONG).show();
                     }
@@ -268,5 +250,97 @@ public class LiveMatchActivity extends AppCompatActivity {
         liveInput.endMatch();
         Intent main = new Intent(this , MainActivity.class);
         startActivity(main);
+    }
+
+    public void incrementScoreTeam2(View view)
+    {
+        List<Player> players_team2 = team2.getPlayers();
+        for(Player player : players_team2)
+        {
+            if(str_player_name2.equalsIgnoreCase(player.getPLAYER_NAME()))
+            {
+                int j = count2++;
+                team2_score.setText("" + j);
+                liveInput.shoots(player.getPLAYER_ID() , true , new LocalDateTime());
+            }
+        }
+//        et_player_name.setText("");
+    }
+
+    public void assignFeatureToPlayer2(View view)
+    {
+        List<Player> players_team2 = team2.getPlayers();
+        int selectedID = add_feature.getCheckedRadioButtonId();
+        switch (selectedID)
+        {
+            case (R.id.radio_shots):
+                for (Player player : players_team2) {
+                    if (str_player_name2.equalsIgnoreCase(player.getPLAYER_NAME())) {
+                        liveInput.shoots(player.getPLAYER_ID(), false, new LocalDateTime());
+                        Toast.makeText(getApplicationContext(), player.getPLAYER_NAME() + " took his chance and shot!! Unfortunately he did not score", Toast.LENGTH_LONG).show();
+                    }
+                }
+                break;
+            case (R.id.radio_yellow):
+                for (Player player : players_team2) {
+                    if (str_player_name2.equalsIgnoreCase(player.getPLAYER_NAME())) {
+                        liveInput.addInfraction(player.getPLAYER_ID(), InfractionType.YELLOW_CARD, new LocalDateTime());
+                        Toast.makeText(getApplicationContext(), "Yellow card assigned to " + player.getPLAYER_NAME(), Toast.LENGTH_LONG).show();
+
+                    }
+                }
+                break;
+            case (R.id.radio_red):
+                for (Player player : players_team2) {
+                    if (str_player_name2.equalsIgnoreCase(player.getPLAYER_NAME())) {
+                        liveInput.addInfraction(player.getPLAYER_ID(), InfractionType.RED_CARD, new LocalDateTime());
+                        Toast.makeText(getApplicationContext(), "Red card assigned to " + player.getPLAYER_NAME(), Toast.LENGTH_LONG).show();
+                    }
+                }
+                break;
+            case (R.id.radio_penalty):
+                for (Player player : players_team2) {
+                    if (str_player_name2.equalsIgnoreCase(player.getPLAYER_NAME())) {
+                        liveInput.addInfraction(player.getPLAYER_ID(), InfractionType.PENALTY, new LocalDateTime());
+                        Toast.makeText(getApplicationContext(), "Penalty card assigned to " + player.getPLAYER_NAME(), Toast.LENGTH_LONG).show();
+                    }
+                }
+                break;
+        }
+    }
+
+    public class SpinnerAdapter extends ArrayAdapter {
+        private List<Player> players;
+        private Context ctx;
+        private int layout_id;
+        public SpinnerAdapter(Context context, int textViewResourceId, List<Player> player_list) {
+            super(context, textViewResourceId, player_list);
+            this.ctx = context;
+            this.players = player_list;
+            this.layout_id = textViewResourceId;
+
+        }
+
+        public View getCustomView(int position, View convertView, ViewGroup parent) {
+            LayoutInflater inflater = getLayoutInflater();
+            View layout;
+            layout = inflater.inflate(R.layout.custom_spinner_first_position, parent, false);
+            final TextView tv_player_spinner = (TextView) layout.findViewById(R.id.tv_player_spinner);
+            Player player = players.get(position);
+            tv_player_spinner.setText(player.getPLAYER_NAME());
+            tv_player_spinner.setTextColor(Color.BLACK);
+
+            return layout;
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+            return getCustomView(position, convertView, parent);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            return getCustomView(position, convertView, parent);
+        }
     }
 }

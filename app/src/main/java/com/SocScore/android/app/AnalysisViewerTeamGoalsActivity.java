@@ -18,7 +18,8 @@ import com.SocScore.framework.data.TeamRankType;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AnalysisViewerTeamIDActivity extends AppCompatActivity {
+public class AnalysisViewerTeamGoalsActivity extends AppCompatActivity {
+
     private ListView listView;
     private List<Team> league = new ArrayList<>();
     private AnalysisViewer analysisViewer = new AnalysisViewer();
@@ -26,11 +27,12 @@ public class AnalysisViewerTeamIDActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_analysis_viewer_team_id);
+        setContentView(R.layout.activity_analysis_viewer_team_goals);
         setUpVariables();
-        league = analysisViewer.getLeague(TeamRankType.ID);
-        TeamAdapter teamAdapter = new TeamAdapter(league , AnalysisViewerTeamIDActivity.this);
+        league = analysisViewer.getLeague(TeamRankType.TOTAL_GOALS);
+        TeamAdapter teamAdapter = new TeamAdapter(league , AnalysisViewerTeamGoalsActivity.this);
         listView.setAdapter(teamAdapter);
+
     }
 
     public void setUpVariables()
@@ -40,7 +42,7 @@ public class AnalysisViewerTeamIDActivity extends AppCompatActivity {
 
     public void close_live_dialog(View view)
     {
-        Intent intent = new Intent(this , AnalysisViewer.class);
+        Intent intent = new Intent(this , AnalysisViewerActivity.class);
         startActivity(intent);
     }
 
@@ -67,9 +69,8 @@ public class AnalysisViewerTeamIDActivity extends AppCompatActivity {
             TextView tv_id = (TextView) convertView.findViewById(R.id.team_id);
             Team team = league_team.get(position);
             tv_name.setText(team.getName());
-            tv_id.setText("ID : " + team.getTEAM_ID());
+            tv_id.setText("Total goals : " + team.getTotalGoalsScored());
             return convertView;
         }
     }
-
 }

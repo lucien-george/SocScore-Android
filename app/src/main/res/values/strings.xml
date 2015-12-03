@@ -24,4 +24,7 @@
     <string name="title_activity_list_view">ListViewActivity</string>
     <string name="title_activity_league_input">LeagueInputActivity</string>
     <string name="title_activity_analysis_viewer_team_id">AnalysisViewerTeamIDActivity</string>
+    <string name="title_activity_analysis_viewer_team_score">AnalysisViewerTeamScoreActivity
+    </string>
+    <string name="title_activity_analysis_viewer_team_goals">AnalysisViewerTeamGoals</string>
 </resources>

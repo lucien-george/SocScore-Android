@@ -132,21 +132,11 @@ public class MainActivity extends AppCompatActivity {
         }
         str_team1_ID = add_team1.getText().toString();
         str_team2_ID = add_team2.getText().toString();
-//        Team team1 = new Team(team_1);
-//        Team team2 = new Team(team_2);
-//        LiveInput live_input = new LiveInput();
-//        live_input.createMatch(team1, team2);
-//        live_match_dialog.show();
         Intent live_match_activity = new Intent(this, LiveMatchActivity.class);
         live_match_activity.putExtra("str_team1_ID" , str_team1_ID);
         live_match_activity.putExtra("str_team2_ID" , str_team2_ID);
         live_input_dialog.dismiss();
         startActivity(live_match_activity);
-//        tv_team1.setText(team_1);
-//        tv_team2.setText(team_2);
-//        button_team1.setText(team_1);
-//        button_team2.setText(team_2);
-//        chrono.start();
     }
 
     public void accessAnalysisViewer(View view)
@@ -159,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
     {
         private List<Team> league_team;
         private Context context;
+        private int layout_id;
         public TeamAdapter(List<Team> league , Context ctx)
         {
             super(ctx, R.layout.list_view_layout, league);

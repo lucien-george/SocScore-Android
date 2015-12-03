@@ -57,12 +57,20 @@
                 android:id="@+id/et_add_player_name"
                 android:hint="Player name"/>
 
-            <EditText
+            <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/et_add_player_id"
-                android:hint="Team ID"
-                android:inputType="number"/>
+                android:id="@+id/spinner_teams"
+                android:spinnerMode="dropdown"
+                android:background="@android:drawable/btn_dropdown"
+                android:popupBackground="#d28c38"/>
+
+            <!--<EditText-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:id="@+id/et_add_player_id"-->
+                <!--android:hint="Team ID"-->
+                <!--android:inputType="number"/>-->
 
             <Button
                 android:layout_width="match_parent"

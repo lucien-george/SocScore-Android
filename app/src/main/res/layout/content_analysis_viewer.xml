@@ -48,12 +48,5 @@
         android:id="@+id/show_league"
         android:onClick="showLeague"/>
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/listView"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.85" />
-
 
 </LinearLayout>

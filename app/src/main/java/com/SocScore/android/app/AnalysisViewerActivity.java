@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -12,7 +11,6 @@ import android.widget.RadioGroup;
 
 import com.SocScore.framework.AnalysisViewer;
 import com.SocScore.framework.data.Team;
-import com.SocScore.framework.data.TeamRankType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,26 +49,17 @@ public class AnalysisViewerActivity extends AppCompatActivity {
         switch(selectedID)
         {
             case (R.id.rank_team_id) :
-                Intent teamIDActivity = new Intent(this, AnalysisViewerTeamIDActivity.class);
+                Intent teamIDActivity = new Intent(AnalysisViewerActivity.this, AnalysisViewerTeamIDActivity.class);
                 startActivity(teamIDActivity);
+                break;
             case (R.id.rank_team_score) :
-                league = analysisViewer.getLeague(TeamRankType.TEAM_SCORE);
-                ArrayList<String> rank_team_score = new ArrayList<>();
-                for(Team team : league)
-                {
-                    rank_team_score.add(team.getName());
-                }
-                ArrayAdapter<String> arrayAdapterScore = new ArrayAdapter<>(this , R.layout.list_view_layout, rank_team_score);
-                listView.setAdapter(arrayAdapterScore);
+                Intent teamScoreActivity = new Intent(AnalysisViewerActivity.this, AnalysisViewerTeamScoreActivity.class);
+                startActivity(teamScoreActivity);
+                break;
             case (R.id.rank_total_goals) :
-                league = analysisViewer.getLeague(TeamRankType.TOTAL_GOALS);
-                ArrayList<String> rank_team_total_goals = new ArrayList<>();
-                for(Team team : league)
-                {
-                    rank_team_total_goals.add(team.getName());
-                }
-                ArrayAdapter<String> arrayAdapterTotalGoals = new ArrayAdapter<>(this , R.layout.list_view_layout, rank_team_total_goals);
-                listView.setAdapter(arrayAdapterTotalGoals);
+                Intent teamGoalActivity = new Intent(AnalysisViewerActivity.this, AnalysisViewerTeamGoalsActivity.class);
+                startActivity(teamGoalActivity);
+                break;
         }
     }
 }
