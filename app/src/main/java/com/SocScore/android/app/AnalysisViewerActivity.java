@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -22,7 +21,6 @@ public class AnalysisViewerActivity extends AppCompatActivity {
     private RadioButton TEAM_SCORE;
     private RadioButton TOTAL_GOALS;
     private Button show_league;
-    private ListView listView;
     private AnalysisViewer analysisViewer = new AnalysisViewer();
     private List<Team> league = new ArrayList<>();
     @Override
@@ -30,7 +28,6 @@ public class AnalysisViewerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_analysis_viewer);
         setUpVariables();
-
     }
 
     public void setUpVariables()
@@ -40,7 +37,6 @@ public class AnalysisViewerActivity extends AppCompatActivity {
         TEAM_SCORE = (RadioButton) findViewById(R.id.rank_team_score);
         TOTAL_GOALS = (RadioButton) findViewById(R.id.rank_total_goals);
         show_league = (Button) findViewById(R.id.show_league);
-        listView = (ListView) findViewById(R.id.listView);
     }
 
     public void showLeague(View view)

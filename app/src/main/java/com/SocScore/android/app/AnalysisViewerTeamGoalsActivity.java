@@ -20,7 +20,7 @@ import java.util.List;
 
 public class AnalysisViewerTeamGoalsActivity extends AppCompatActivity {
 
-    private ListView listView;
+    private ListView listViewGoals;
     private List<Team> league = new ArrayList<>();
     private AnalysisViewer analysisViewer = new AnalysisViewer();
 
@@ -29,19 +29,18 @@ public class AnalysisViewerTeamGoalsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_analysis_viewer_team_goals);
         setUpVariables();
-        league = analysisViewer.getLeague(TeamRankType.TOTAL_GOALS);
         TeamAdapter teamAdapter = new TeamAdapter(league , AnalysisViewerTeamGoalsActivity.this);
-        listView.setAdapter(teamAdapter);
+        listViewGoals.setAdapter(teamAdapter);
 
     }
 
     public void setUpVariables()
     {
-        listView = (ListView) findViewById(R.id.listView);
+        league = analysisViewer.getLeague(TeamRankType.TOTAL_GOALS);
+        listViewGoals = (ListView) findViewById(R.id.list_view_goals);
     }
 
-    public void close_live_dialog(View view)
-    {
+    public void closeAnalysisGoals(View view) {
         Intent intent = new Intent(this , AnalysisViewerActivity.class);
         startActivity(intent);
     }
@@ -53,23 +52,27 @@ public class AnalysisViewerTeamGoalsActivity extends AppCompatActivity {
         private int layout_id;
         public TeamAdapter(List<Team> league , Context ctx)
         {
-            super(ctx, R.layout.list_view_layout, league);
+            super(ctx, R.layout.analysis_viewer_layout, league);
             this.league_team = league;
             this.context = ctx;
-            this.layout_id = R.layout.list_view_layout;
+            this.layout_id = R.layout.analysis_viewer_layout;
         }
         public View getView(int position , View convertView , ViewGroup parent)
         {
             if(convertView == null)
             {
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.list_view_layout , parent , false);
+                convertView = inflater.inflate(layout_id , parent , false);
             }
-            TextView tv_name = (TextView) convertView.findViewById(R.id.team_name);
-            TextView tv_id = (TextView) convertView.findViewById(R.id.team_id);
+            TextView tv_name = (TextView) convertView.findViewById(R.id.analysis_team_name);
+            TextView tv_id = (TextView) convertView.findViewById(R.id.analysis_team_id);
+            TextView tv_score = (TextView) convertView.findViewById(R.id.analysis_team_score);
+            TextView tv_goals = (TextView) convertView.findViewById(R.id.analysis_team_goals);
             Team team = league_team.get(position);
             tv_name.setText(team.getName());
-            tv_id.setText("Total goals : " + team.getTotalGoalsScored());
+            tv_id.setText("" + team.getTEAM_ID());
+            tv_score.setText("" + team.getTeamScore());
+            tv_goals.setText("" + team.getTotalGoalsScored());
             return convertView;
         }
     }

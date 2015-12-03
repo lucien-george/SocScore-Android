@@ -149,7 +149,7 @@ public class BatchInputActivity extends AppCompatActivity {
         et_team1 = (EditText) findViewById(R.id.et_team1);
         et_team2 = (EditText) findViewById(R.id.et_team2);
         batchInput = new BatchInput();
-        listView = (ListView) findViewById(R.id.listView);
+        listView = (ListView) findViewById(R.id.list_view_score);
     }
 
     public static int findTeamID(String str) {

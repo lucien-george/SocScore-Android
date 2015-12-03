@@ -20,7 +20,7 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="286dp"
-        android:id="@+id/listView"
+        android:id="@+id/list_view_score"
         android:background="@drawable/sign_in_background">
 
 

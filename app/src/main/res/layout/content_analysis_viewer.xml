@@ -11,8 +11,7 @@
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.SocScore.android.app.AnalysisViewerActivity"
-    tools:showIn="@layout/activity_analysis_viewer"
-    android:weightSum="1">
+    tools:showIn="@layout/activity_analysis_viewer">
 
     <RadioGroup
         android:layout_width="match_parent"

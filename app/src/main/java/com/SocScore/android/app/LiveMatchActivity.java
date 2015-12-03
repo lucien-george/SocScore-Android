@@ -58,8 +58,8 @@ public class LiveMatchActivity extends AppCompatActivity {
     private RadioButton rd_radio_penalty;
     private RadioGroup add_feature;
 //    private EditText et_player_name;
-    private static int count1 = 1;
-    private static int count2 = 1;
+    private static int count1;
+    private static int count2;
     private List<Player> players1 = new ArrayList<>();
     private List<Player> players2 = new ArrayList<>();
 
@@ -74,6 +74,8 @@ public class LiveMatchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_live_match);
         setUpVariables();
+        count1 = 1;
+        count2 = 1;
         chrono.start();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.inflateMenu(R.menu.menu_live);

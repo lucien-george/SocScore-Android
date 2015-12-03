@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         create_new_match_live_button = (Button) live_input_dialog.findViewById(R.id.create_new_match_button_live_dialog);
         add_team1 = (EditText) live_input_dialog.findViewById(R.id.et_team1);
         add_team2 = (EditText) live_input_dialog.findViewById(R.id.et_team2);
-        listView = (ListView) live_input_dialog.findViewById(R.id.listView);
+        listView = (ListView) live_input_dialog.findViewById(R.id.list_view_score);
     }
 
     public void setUpVariables()

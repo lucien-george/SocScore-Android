@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".AnalysisViewerTeamGoalsActivity">
+    android:background="@drawable/background_blurry"
+    tools:context="com.SocScore.android.app.AnalysisViewerTeamGoalsActivity">
 
 
     <include layout="@layout/content_analysis_viewer_team_goals" />
