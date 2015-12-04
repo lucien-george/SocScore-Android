@@ -62,6 +62,38 @@
         <activity
             android:name=".AnalysisViewerTeamGoalsActivity"
             android:label="@string/title_activity_analysis_viewer_team_goals"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".PlayerAnalysisActivity"
+            android:label="@string/title_activity_player_analysis"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".MatchAnalysisActivity"
+            android:label="@string/title_activity_match_analysis"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".PlayerByNameActivity"
+            android:label="@string/title_activity_player_by_name"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".PlayerByIDActivity"
+            android:label="@string/title_activity_plsyer_by_id"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".PlayerByGoalsActivity"
+            android:label="@string/title_activity_player_by_goals"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".PlayerByYellowCardsActivity"
+            android:label="@string/title_activity_player_by_yellow_cards"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".PlayerByRedCardsActivity"
+            android:label="@string/title_activity_player_by_red_cards"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".PlayerByPenaltiesActivity"
+            android:label="@string/title_activity_player_by_penalties"
             android:theme="@style/AppTheme"></activity>
     </application>
 

@@ -37,6 +37,18 @@
             android:text="TOTAL GOALS"
             android:id="@+id/rank_total_goals"/>
 
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Player analysis"
+            android:id="@+id/radio_player_analysis"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Match analysis"
+            android:id="@+id/radio_match_analysis"/>
+
     </RadioGroup>
 
     <Button

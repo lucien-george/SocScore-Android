@@ -48,13 +48,25 @@ public class AnalysisViewerActivity extends AppCompatActivity {
                 Intent teamIDActivity = new Intent(AnalysisViewerActivity.this, AnalysisViewerTeamIDActivity.class);
                 startActivity(teamIDActivity);
                 break;
+
             case (R.id.rank_team_score) :
                 Intent teamScoreActivity = new Intent(AnalysisViewerActivity.this, AnalysisViewerTeamScoreActivity.class);
                 startActivity(teamScoreActivity);
                 break;
+
             case (R.id.rank_total_goals) :
                 Intent teamGoalActivity = new Intent(AnalysisViewerActivity.this, AnalysisViewerTeamGoalsActivity.class);
                 startActivity(teamGoalActivity);
+                break;
+
+            case (R.id.radio_player_analysis) :
+                Intent player_analysis = new Intent(AnalysisViewerActivity.this , PlayerAnalysisActivity.class);
+                startActivity(player_analysis);
+                break;
+
+            case (R.id.radio_match_analysis) :
+                Intent match_analysis = new Intent(AnalysisViewerActivity.this , MatchAnalysisActivity.class);
+                startActivity(match_analysis);
                 break;
         }
     }

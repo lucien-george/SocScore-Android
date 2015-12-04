@@ -214,7 +214,7 @@ public class LiveMatchActivity extends AppCompatActivity {
                 for (Player player : players_team1) {
                     if (str_player_name1.equalsIgnoreCase(player.getPLAYER_NAME())) {
                         liveInput.shoots(player.getPLAYER_ID(), false, new LocalDateTime());
-                        Toast.makeText(getApplicationContext(), player.getPLAYER_NAME() + " took his chance and shot!! Unfortunately he did not score", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), player.getPLAYER_NAME() + " took his chance and shot!! Unfortunately he did not score", Toast.LENGTH_SHORT).show();
                     }
                 }
                 break;
@@ -222,7 +222,7 @@ public class LiveMatchActivity extends AppCompatActivity {
                 for (Player player : players_team1) {
                     if (str_player_name1.equalsIgnoreCase(player.getPLAYER_NAME())) {
                         liveInput.addInfraction(player.getPLAYER_ID(), InfractionType.YELLOW_CARD, new LocalDateTime());
-                        Toast.makeText(getApplicationContext(), "Yellow card assigned to " + player.getPLAYER_NAME(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Yellow card assigned to " + player.getPLAYER_NAME(), Toast.LENGTH_SHORT).show();
 
                     }
                 }
@@ -231,7 +231,7 @@ public class LiveMatchActivity extends AppCompatActivity {
                 for (Player player : players_team1) {
                     if (str_player_name1.equalsIgnoreCase(player.getPLAYER_NAME())) {
                         liveInput.addInfraction(player.getPLAYER_ID(), InfractionType.RED_CARD, new LocalDateTime());
-                        Toast.makeText(getApplicationContext(), "Red card assigned to " + player.getPLAYER_NAME(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Red card assigned to " + player.getPLAYER_NAME(), Toast.LENGTH_SHORT).show();
                     }
                 }
                 break;
@@ -239,7 +239,7 @@ public class LiveMatchActivity extends AppCompatActivity {
                 for (Player player : players_team1) {
                     if (str_player_name1.equalsIgnoreCase(player.getPLAYER_NAME())) {
                         liveInput.addInfraction(player.getPLAYER_ID(), InfractionType.PENALTY, new LocalDateTime());
-                        Toast.makeText(getApplicationContext(), "Penalty card assigned to " + player.getPLAYER_NAME(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Penalty assigned to " + player.getPLAYER_NAME(), Toast.LENGTH_SHORT).show();
                     }
                 }
                 break;
@@ -279,7 +279,7 @@ public class LiveMatchActivity extends AppCompatActivity {
                 for (Player player : players_team2) {
                     if (str_player_name2.equalsIgnoreCase(player.getPLAYER_NAME())) {
                         liveInput.shoots(player.getPLAYER_ID(), false, new LocalDateTime());
-                        Toast.makeText(getApplicationContext(), player.getPLAYER_NAME() + " took his chance and shot!! Unfortunately he did not score", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), player.getPLAYER_NAME() + " took his chance and shot!! Unfortunately he did not score", Toast.LENGTH_SHORT).show();
                     }
                 }
                 break;
@@ -287,7 +287,7 @@ public class LiveMatchActivity extends AppCompatActivity {
                 for (Player player : players_team2) {
                     if (str_player_name2.equalsIgnoreCase(player.getPLAYER_NAME())) {
                         liveInput.addInfraction(player.getPLAYER_ID(), InfractionType.YELLOW_CARD, new LocalDateTime());
-                        Toast.makeText(getApplicationContext(), "Yellow card assigned to " + player.getPLAYER_NAME(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Yellow card assigned to " + player.getPLAYER_NAME(), Toast.LENGTH_SHORT).show();
 
                     }
                 }
@@ -296,7 +296,7 @@ public class LiveMatchActivity extends AppCompatActivity {
                 for (Player player : players_team2) {
                     if (str_player_name2.equalsIgnoreCase(player.getPLAYER_NAME())) {
                         liveInput.addInfraction(player.getPLAYER_ID(), InfractionType.RED_CARD, new LocalDateTime());
-                        Toast.makeText(getApplicationContext(), "Red card assigned to " + player.getPLAYER_NAME(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Red card assigned to " + player.getPLAYER_NAME(), Toast.LENGTH_SHORT).show();
                     }
                 }
                 break;
@@ -304,7 +304,7 @@ public class LiveMatchActivity extends AppCompatActivity {
                 for (Player player : players_team2) {
                     if (str_player_name2.equalsIgnoreCase(player.getPLAYER_NAME())) {
                         liveInput.addInfraction(player.getPLAYER_ID(), InfractionType.PENALTY, new LocalDateTime());
-                        Toast.makeText(getApplicationContext(), "Penalty card assigned to " + player.getPLAYER_NAME(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Penalty assigned to " + player.getPLAYER_NAME(), Toast.LENGTH_SHORT).show();
                     }
                 }
                 break;

@@ -27,4 +27,12 @@
     <string name="title_activity_analysis_viewer_team_score">AnalysisViewerTeamScoreActivity
     </string>
     <string name="title_activity_analysis_viewer_team_goals">AnalysisViewerTeamGoals</string>
+    <string name="title_activity_player_analysis">PlayerAnalysisActivity</string>
+    <string name="title_activity_match_analysis">MatchAnalysisActivity</string>
+    <string name="title_activity_player_by_name">PlayerByNameActivity</string>
+    <string name="title_activity_plsyer_by_id">PlsyerByIDActivity</string>
+    <string name="title_activity_player_by_goals">PlayerByGoalsActivity</string>
+    <string name="title_activity_player_by_yellow_cards">PlayerByYellowCardsActivity</string>
+    <string name="title_activity_player_by_red_cards">PlayerByRedCardsActivity</string>
+    <string name="title_activity_player_by_penalties">PlayerByPenaltiesActivity</string>
 </resources>
