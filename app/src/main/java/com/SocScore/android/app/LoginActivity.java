@@ -43,7 +43,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setUpVariables();
-//        analysisViewer.loadDataFromDisk();
         context = LoginActivity.this;
         dialog = new Dialog(context);
         setUpDialog();

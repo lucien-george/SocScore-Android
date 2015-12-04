@@ -136,7 +136,6 @@ public class BatchInputMatchActivity extends AppCompatActivity {
     {
         batchInput.saveMatch();
         batchInput.addAllMatchesToLeague();
-        leagueInput.saveDataToDisk();
         Intent intent = new Intent(this , BatchInputActivity.class);
         startActivity(intent);
     }
