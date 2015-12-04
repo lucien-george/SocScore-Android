@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.SocScore.framework.AccessManager;
+import com.SocScore.framework.LeagueInput;
 import com.SocScore.framework.data.InfractionType;
 import com.SocScore.framework.data.LeagueAnalysis;
 import com.SocScore.framework.data.Player;
@@ -67,6 +68,7 @@ public class BatchInputMatchActivity extends AppCompatActivity {
     private Spinner player_spinner_Team2;
     private String str_player_name1;
     private String str_player_name2;
+    private LeagueInput leagueInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,6 +136,7 @@ public class BatchInputMatchActivity extends AppCompatActivity {
     {
         batchInput.saveMatch();
         batchInput.addAllMatchesToLeague();
+        leagueInput.saveDataToDisk();
         Intent intent = new Intent(this , BatchInputActivity.class);
         startActivity(intent);
     }
@@ -144,6 +147,7 @@ public class BatchInputMatchActivity extends AppCompatActivity {
         batchInput = new BatchInput();
         AccessManager.authenticate(1234);
         batchInput= (BatchInput) AccessManager.setInputType(ScoreKeeperType.BATCH_INPUT);
+        leagueInput = new LeagueInput();
         team1_score = (TextView) findViewById(R.id.tv_team1_score);
         team2_score = (TextView) findViewById(R.id.tv_team2_score);
         increment_score = (Button) findViewById(R.id.increment_score_team1);

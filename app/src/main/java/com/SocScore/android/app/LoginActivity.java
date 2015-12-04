@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import com.SocScore.framework.AccessManager;
 import com.SocScore.framework.AnalysisViewer;
-import com.SocScore.framework.LeagueInput;
 import com.SocScore.framework.scorekeeper.BatchInput;
 import com.SocScore.framework.scorekeeper.LiveInput;
 import com.SocScore.framework.scorekeeper.ScoreKeeperType;
@@ -38,13 +37,13 @@ public class LoginActivity extends AppCompatActivity {
     private AnalysisViewer analysisViewer = new AnalysisViewer();
     private LiveInput liveInput;
     private BatchInput batchInput;
-    private LeagueInput leagueInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setUpVariables();
+//        analysisViewer.loadDataFromDisk();
         context = LoginActivity.this;
         dialog = new Dialog(context);
         setUpDialog();

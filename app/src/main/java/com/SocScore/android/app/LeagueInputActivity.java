@@ -140,7 +140,6 @@ public class LeagueInputActivity extends AppCompatActivity {
         remove_team = (Button) findViewById(R.id.remove_team);
         add_player = (Button) findViewById(R.id.add_player);
         add_player_name = (EditText) findViewById(R.id.et_add_player_name);
-//        add_player_ID = (EditText) findViewById(R.id.et_add_player_id);
         et_transfer_player_id = (EditText) findViewById(R.id.et_transfer_player);
         et_old_team_id = (EditText) findViewById(R.id.et_old_team_id);
         et_new_team_id = (EditText) findViewById(R.id.et_new_team_id);
@@ -205,6 +204,7 @@ public class LeagueInputActivity extends AppCompatActivity {
         if(foundTeam(str_add_remove_team))
         {
             leagueInput.removeTeamFromLeague(findTeamID(str_add_remove_team));
+            Toast.makeText(getApplicationContext() , "Team was removed from league" , Toast.LENGTH_SHORT).show();
         }
         else
         {
@@ -231,6 +231,7 @@ public class LeagueInputActivity extends AppCompatActivity {
             return;
         }
         leagueInput.addNewPlayerToTeam(str_name, team_id);
+        Toast.makeText(getApplicationContext() , "Player was added to corresponding team" , Toast.LENGTH_SHORT).show();
         add_player_name.setText("");
     }
 
@@ -240,6 +241,7 @@ public class LeagueInputActivity extends AppCompatActivity {
         int_old_team_id = Integer.parseInt(et_old_team_id.getText().toString());
         int_new_team_id = Integer.parseInt(et_new_team_id.getText().toString());
         leagueInput.transferPlayer(int_transfer_player_id, int_old_team_id, int_new_team_id);
+        Toast.makeText(getApplicationContext() , "Player was transferred" , Toast.LENGTH_SHORT).show();
         et_transfer_player_id.setText("");
         et_old_team_id.setText("");
         et_new_team_id.setText("");
@@ -249,6 +251,7 @@ public class LeagueInputActivity extends AppCompatActivity {
     {
         int_remove_player_id = Integer.parseInt(et_remove_player_id.getText().toString());
         leagueInput.removePlayerFromLeague(int_remove_player_id);
+        Toast.makeText(getApplicationContext() , "Player was removed from league" , Toast.LENGTH_SHORT).show();
         et_remove_player_id.setText("");
     }
 
@@ -256,6 +259,7 @@ public class LeagueInputActivity extends AppCompatActivity {
     {
         int_remove_match_id = Integer.parseInt(et_remove_match_id.getText().toString());
         leagueInput.removeMatchFromLeague(int_remove_match_id);
+        Toast.makeText(getApplicationContext() , "Match was removed from league" , Toast.LENGTH_SHORT).show();
         et_remove_match_id.setText("");
     }
 
