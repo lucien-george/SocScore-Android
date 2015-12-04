@@ -192,9 +192,16 @@ public class LiveMatchActivity extends AppCompatActivity {
         {
             if(str_player_name1.equalsIgnoreCase(player.getPLAYER_NAME()))
             {
-                int i = count1++;
-                team1_score.setText("" + i);
-                liveInput.shoots(player.getPLAYER_ID() , true , new LocalDateTime());
+                if(player.getNumRedCards() == 1)
+                {
+                    Toast.makeText(getApplicationContext(), player.getPLAYER_NAME() + " is expelled from match, can't add a shot", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    int i = count1++;
+                    team1_score.setText("" + i);
+                    liveInput.shoots(player.getPLAYER_ID() , true , new LocalDateTime());
+                }
             }
         }
     }
@@ -207,16 +214,37 @@ public class LiveMatchActivity extends AppCompatActivity {
             case (R.id.radio_shots):
                 for (Player player : players_team1) {
                     if (str_player_name1.equalsIgnoreCase(player.getPLAYER_NAME())) {
-                        liveInput.shoots(player.getPLAYER_ID(), false, new LocalDateTime());
-                        Toast.makeText(getApplicationContext(), player.getPLAYER_NAME() + " took his chance and shot!! Unfortunately he did not score", Toast.LENGTH_SHORT).show();
+                        if(player.getNumRedCards() == 1)
+                        {
+                            Toast.makeText(getApplicationContext(), player.getPLAYER_NAME() + " is expelled from match, can't add a shot", Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            liveInput.shoots(player.getPLAYER_ID(), false, new LocalDateTime());
+                            Toast.makeText(getApplicationContext(), player.getPLAYER_NAME() + " took his chance and shot!! Unfortunately he did not score", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
                 break;
             case (R.id.radio_yellow):
                 for (Player player : players_team1) {
                     if (str_player_name1.equalsIgnoreCase(player.getPLAYER_NAME())) {
-                        liveInput.addInfraction(player.getPLAYER_ID(), InfractionType.YELLOW_CARD, new LocalDateTime());
-                        Toast.makeText(getApplicationContext(), "Yellow card assigned to " + player.getPLAYER_NAME(), Toast.LENGTH_SHORT).show();
+                        if(player.getNumYellowCards() == 0)
+                        {
+                            liveInput.addInfraction(player.getPLAYER_ID(), InfractionType.YELLOW_CARD, new LocalDateTime());
+                            Toast.makeText(getApplicationContext(), "Yellow card assigned to " + player.getPLAYER_NAME(), Toast.LENGTH_SHORT).show();
+                        }
+                        else if(player.getNumYellowCards() == 1)
+                        {
+                            liveInput.addInfraction(player.getPLAYER_ID(), InfractionType.YELLOW_CARD, new LocalDateTime());
+                            liveInput.addInfraction(player.getPLAYER_ID(), InfractionType.RED_CARD, new LocalDateTime());
+                            Toast.makeText(getApplicationContext(), "2nd yellow card assigned to " + player.getPLAYER_NAME() + ". He then gets a red card too", Toast.LENGTH_SHORT).show();
+                        }
+                        else if(player.getNumYellowCards() == 2)
+                        {
+                            Toast.makeText(getApplicationContext(), player.getPLAYER_NAME() + " is expelled from match, can't add a yellow card", Toast.LENGTH_SHORT).show();
+
+                        }
 
                     }
                 }
@@ -224,16 +252,29 @@ public class LiveMatchActivity extends AppCompatActivity {
             case (R.id.radio_red):
                 for (Player player : players_team1) {
                     if (str_player_name1.equalsIgnoreCase(player.getPLAYER_NAME())) {
-                        liveInput.addInfraction(player.getPLAYER_ID(), InfractionType.RED_CARD, new LocalDateTime());
-                        Toast.makeText(getApplicationContext(), "Red card assigned to " + player.getPLAYER_NAME(), Toast.LENGTH_SHORT).show();
+                        if(player.getNumRedCards() == 1)
+                        {
+                            Toast.makeText(getApplicationContext(), player.getPLAYER_NAME() + " is expelled from match, can't add a red card", Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            liveInput.addInfraction(player.getPLAYER_ID(), InfractionType.RED_CARD, new LocalDateTime());
+                            Toast.makeText(getApplicationContext(), "Red card assigned to " + player.getPLAYER_NAME(), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
                 break;
             case (R.id.radio_penalty):
                 for (Player player : players_team1) {
                     if (str_player_name1.equalsIgnoreCase(player.getPLAYER_NAME())) {
-                        liveInput.addInfraction(player.getPLAYER_ID(), InfractionType.PENALTY, new LocalDateTime());
-                        Toast.makeText(getApplicationContext(), "Penalty assigned to " + player.getPLAYER_NAME(), Toast.LENGTH_SHORT).show();
+                        if (player.getNumRedCards() == 1) {
+                            Toast.makeText(getApplicationContext(), player.getPLAYER_NAME() + " is expelled from match, can't add a penalty", Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            liveInput.addInfraction(player.getPLAYER_ID(), InfractionType.PENALTY, new LocalDateTime());
+                            Toast.makeText(getApplicationContext(), "Penalty assigned to " + player.getPLAYER_NAME(), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
                 break;
@@ -255,9 +296,17 @@ public class LiveMatchActivity extends AppCompatActivity {
         {
             if(str_player_name2.equalsIgnoreCase(player.getPLAYER_NAME()))
             {
-                int j = count2++;
-                team2_score.setText("" + j);
-                liveInput.shoots(player.getPLAYER_ID() , true , new LocalDateTime());
+                if(player.getNumRedCards() == 1)
+                {
+                    Toast.makeText(getApplicationContext(), player.getPLAYER_NAME() + " is expelled from match, can't add a shot", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    int j = count2++;
+                    team2_score.setText("" + j);
+                    liveInput.shoots(player.getPLAYER_ID(), true, new LocalDateTime());
+                }
+
             }
         }
     }
@@ -271,16 +320,37 @@ public class LiveMatchActivity extends AppCompatActivity {
             case (R.id.radio_shots):
                 for (Player player : players_team2) {
                     if (str_player_name2.equalsIgnoreCase(player.getPLAYER_NAME())) {
-                        liveInput.shoots(player.getPLAYER_ID(), false, new LocalDateTime());
-                        Toast.makeText(getApplicationContext(), player.getPLAYER_NAME() + " took his chance and shot!! Unfortunately he did not score", Toast.LENGTH_SHORT).show();
+                        if(player.getNumRedCards() == 1)
+                        {
+                            Toast.makeText(getApplicationContext(), player.getPLAYER_NAME() + " is expelled from match, can't add a shot", Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            liveInput.shoots(player.getPLAYER_ID(), false, new LocalDateTime());
+                            Toast.makeText(getApplicationContext(), player.getPLAYER_NAME() + " took his chance and shot!! Unfortunately he did not score", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
                 break;
             case (R.id.radio_yellow):
                 for (Player player : players_team2) {
                     if (str_player_name2.equalsIgnoreCase(player.getPLAYER_NAME())) {
-                        liveInput.addInfraction(player.getPLAYER_ID(), InfractionType.YELLOW_CARD, new LocalDateTime());
-                        Toast.makeText(getApplicationContext(), "Yellow card assigned to " + player.getPLAYER_NAME(), Toast.LENGTH_SHORT).show();
+                        if(player.getNumYellowCards() == 0)
+                        {
+                            liveInput.addInfraction(player.getPLAYER_ID(), InfractionType.YELLOW_CARD, new LocalDateTime());
+                            Toast.makeText(getApplicationContext(), "Yellow card assigned to " + player.getPLAYER_NAME(), Toast.LENGTH_SHORT).show();
+                        }
+                        else if(player.getNumYellowCards() == 1)
+                        {
+                            liveInput.addInfraction(player.getPLAYER_ID(), InfractionType.YELLOW_CARD, new LocalDateTime());
+                            liveInput.addInfraction(player.getPLAYER_ID(), InfractionType.RED_CARD, new LocalDateTime());
+                            Toast.makeText(getApplicationContext(), "2nd yellow card assigned to " + player.getPLAYER_NAME() + ". He then gets a red card too", Toast.LENGTH_SHORT).show();
+                        }
+                        else if(player.getNumYellowCards() == 2)
+                        {
+                            Toast.makeText(getApplicationContext(), player.getPLAYER_NAME() + " is expelled from match, can't add a yellow card", Toast.LENGTH_SHORT).show();
+
+                        }
 
                     }
                 }
@@ -288,16 +358,29 @@ public class LiveMatchActivity extends AppCompatActivity {
             case (R.id.radio_red):
                 for (Player player : players_team2) {
                     if (str_player_name2.equalsIgnoreCase(player.getPLAYER_NAME())) {
-                        liveInput.addInfraction(player.getPLAYER_ID(), InfractionType.RED_CARD, new LocalDateTime());
-                        Toast.makeText(getApplicationContext(), "Red card assigned to " + player.getPLAYER_NAME(), Toast.LENGTH_SHORT).show();
+                        if(player.getNumRedCards() == 1)
+                        {
+                            Toast.makeText(getApplicationContext(), player.getPLAYER_NAME() + " is expelled from match, can't add a red card", Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            liveInput.addInfraction(player.getPLAYER_ID(), InfractionType.RED_CARD, new LocalDateTime());
+                            Toast.makeText(getApplicationContext(), "Red card assigned to " + player.getPLAYER_NAME(), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
                 break;
             case (R.id.radio_penalty):
                 for (Player player : players_team2) {
                     if (str_player_name2.equalsIgnoreCase(player.getPLAYER_NAME())) {
-                        liveInput.addInfraction(player.getPLAYER_ID(), InfractionType.PENALTY, new LocalDateTime());
-                        Toast.makeText(getApplicationContext(), "Penalty assigned to " + player.getPLAYER_NAME(), Toast.LENGTH_SHORT).show();
+                        if (player.getNumRedCards() == 1) {
+                            Toast.makeText(getApplicationContext(), player.getPLAYER_NAME() + " is expelled from match, can't add a penalty", Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            liveInput.addInfraction(player.getPLAYER_ID(), InfractionType.PENALTY, new LocalDateTime());
+                            Toast.makeText(getApplicationContext(), "Penalty assigned to " + player.getPLAYER_NAME(), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
                 break;

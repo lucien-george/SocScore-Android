@@ -43,6 +43,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setUpVariables();
+//        LeagueInput leagueInput = new LeagueInput();
+//        leagueInput.loadDataFromDisk();
         context = LoginActivity.this;
         dialog = new Dialog(context);
         setUpDialog();
