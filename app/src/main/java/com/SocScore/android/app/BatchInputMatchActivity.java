@@ -126,10 +126,12 @@ public class BatchInputMatchActivity extends AppCompatActivity {
         tv_team2_name.setText(str_team2);
         if(team1.getPlayers().size() < 11 || team2.getPlayers().size() < 11)
         {
-            Intent main = new Intent(this , MainActivity.class);
-            startActivity(main);
+            Toast.makeText(getApplicationContext() , "There are not enough players in either one of the selected teams" , Toast.LENGTH_LONG).show();
         }
-        batchInput.createMatch(team1 , team2 , new LocalDateTime() , new LocalDateTime().plusMinutes(90));
+        else
+        {
+            batchInput.createMatch(team1 , team2 , new LocalDateTime() , new LocalDateTime().plusMinutes(90));
+        }
     }
 
     public void closeBatchInput(View view)

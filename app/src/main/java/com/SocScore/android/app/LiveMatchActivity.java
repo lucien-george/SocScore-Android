@@ -122,11 +122,13 @@ public class LiveMatchActivity extends AppCompatActivity {
         str_team2 = team2.getName();
         if(team1.getPlayers().size() < 11 || team2.getPlayers().size() < 11)
         {
-            Intent main = new Intent(this , MainActivity.class);
-            startActivity(main);
+            Toast.makeText(getApplicationContext() , "There are not enough players in either one of the selected teams" , Toast.LENGTH_LONG).show();
         }
-        liveInput.createMatch(team1, team2);
-        liveInput.startMatch();
+        else
+        {
+            liveInput.createMatch(team1, team2);
+            liveInput.startMatch();
+        }
     }
 
     public void setUpVariables() {
