@@ -18,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.SocScore.framework.AccessManager;
 import com.SocScore.framework.LeagueInput;
 import com.SocScore.framework.data.LeagueAnalysis;
 import com.SocScore.framework.data.Player;
@@ -62,6 +63,7 @@ public class LeagueInputActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_league_input);
         setUpVariables();
+        AccessManager.authenticate(1234);
         league = LeagueAnalysis.getLeague();
         spinner_team.setAdapter(new SpinnerAdapter(LeagueInputActivity.this , R.layout.custom_spinner , league));
         spinnerTeam();

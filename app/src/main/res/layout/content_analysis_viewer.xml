@@ -13,6 +13,15 @@
     tools:context="com.SocScore.android.app.AnalysisViewerActivity"
     tools:showIn="@layout/activity_analysis_viewer">
 
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/close_analysis"
+        android:onClick="closeAnalysis"
+        android:background="@drawable/close_pop_up_gray"
+        android:layout_gravity="top|right"
+        android:layout_margin="16dp"/>
+
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -70,4 +70,10 @@ public class AnalysisViewerActivity extends AppCompatActivity {
                 break;
         }
     }
+
+    public void closeAnalysis(View view)
+    {
+        Intent intent = new Intent(this , LoginActivity.class);
+        startActivity(intent);
+    }
 }

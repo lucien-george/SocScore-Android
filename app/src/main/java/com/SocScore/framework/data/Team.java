@@ -69,7 +69,7 @@ public class Team  implements Serializable {
      * @throws RuntimeException Throws an exception if there aren't at least 11 players in the team
      */
     public void startMatch() throws RuntimeException {
-        if(players.size() < 2) throw new RuntimeException("Teams must have at least 11 players to start a match");
+        if(players.size() < 11) throw new RuntimeException("Teams must have at least 11 players to start a match");
         for(Player player : players) {
             player.startMatch();
         }

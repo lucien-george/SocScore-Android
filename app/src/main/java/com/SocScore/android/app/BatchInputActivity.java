@@ -22,9 +22,6 @@ import com.SocScore.framework.AccessManager;
 import com.SocScore.framework.data.LeagueAnalysis;
 import com.SocScore.framework.data.Team;
 import com.SocScore.framework.scorekeeper.BatchInput;
-import com.SocScore.framework.scorekeeper.ScoreKeeperType;
-
-import org.joda.time.LocalDateTime;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +34,8 @@ public class BatchInputActivity extends AppCompatActivity {
     private String str_team2;
     private EditText et_team1;
     private EditText et_team2;
-    private int int_team1_ID;
-    private int int_team2_ID;
+    private String str_team1_ID;
+    private String str_team2_ID;
     Team team1;
     Team team2;
     private static List<Team> league = new ArrayList<>();
@@ -54,6 +51,7 @@ public class BatchInputActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_batch_input);
         context = BatchInputActivity.this;
+        AccessManager.authenticate(1234);
         batch_input_dialog = new Dialog(context);
         setUpVariables();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -111,32 +109,16 @@ public class BatchInputActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    int_team1_ID = Integer.parseInt(et_team1.getText().toString());
-                    int_team2_ID = Integer.parseInt(et_team2.getText().toString());
-                    for(int i : team_ID_array)
-                    {
-                        if (int_team1_ID == i)
-                        {
-                            team1 = LeagueAnalysis.findTeam(i);
-                            break;
-                        }
-                    }
-                    for(int j : team_ID_array)
-                    {
-                        if(int_team2_ID == j)
-                        {
-                            team2 = LeagueAnalysis.findTeam(j);
-                            break;
-                        }
-                    }
+                    str_team1_ID = et_team1.getText().toString();
+                    str_team2_ID = et_team2.getText().toString();
+                    Intent batch_match_activity = new Intent(BatchInputActivity.this, BatchInputMatchActivity.class);
+                    batch_match_activity.putExtra("str_team1_ID", str_team1_ID);
+                    batch_match_activity.putExtra("str_team2_ID", str_team2_ID);
+                    startActivity(batch_match_activity);
                 }
-                AccessManager.authenticate(1234);
-                batchInput = (BatchInput) AccessManager.setInputType(ScoreKeeperType.BATCH_INPUT);
-                batchInput.createMatch(team1 , team2 , new LocalDateTime() , new LocalDateTime().plusMinutes(90));
-                batchInput.saveMatch();
-                Toast.makeText(getApplicationContext() , "match with teams " + team1.getName() + " (ID : " + team1.getTEAM_ID() + "), and " + team2.getName() + " (ID : " + team2.getTEAM_ID() + ") was successfully saved" , Toast.LENGTH_LONG).show();
                 et_team1.setText("");
                 et_team2.setText("");
+
             }
         });
     }

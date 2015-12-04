@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.SocScore.framework.AnalysisViewer;
 import com.SocScore.framework.data.Match;
@@ -62,8 +63,17 @@ public class MatchByIDActivity extends AppCompatActivity {
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = inflater.inflate(layout_id , parent , false);
             }
-
-
+            Match match = match_list.get(position);
+            TextView tv_match_id = (TextView) convertView.findViewById(R.id.match_id);
+            TextView tv_team1_id = (TextView) convertView.findViewById(R.id.team1_id);
+            TextView tv_team2_id = (TextView) convertView.findViewById(R.id.team2_id);
+            TextView tv_team1_score = (TextView) convertView.findViewById(R.id.team1_score);
+            TextView tv_team2_score = (TextView) convertView.findViewById(R.id.team2_score);
+            tv_match_id.setText("" + match.getMATCH_ID());
+            tv_team1_id.setText("" + match.getTEAM1_ID());
+            tv_team2_id.setText("" + match.getTEAM2_ID());
+            tv_team1_score.setText("" + match.getTeam1Score());
+            tv_team2_score.setText("" + match.getTeam2Score());
             return convertView;
         }
     }

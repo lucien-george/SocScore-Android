@@ -37,4 +37,5 @@
     <string name="title_activity_player_by_penalties">PlayerByPenaltiesActivity</string>
     <string name="title_activity_match_by_id">MatchByIDActivity</string>
     <string name="title_activity_match_by_date">MatchByDateActivity</string>
+    <string name="title_activity_batch_input_match">BatchInputMatchActivity</string>
 </resources>
