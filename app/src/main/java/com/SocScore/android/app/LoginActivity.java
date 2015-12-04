@@ -44,14 +44,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        fab_sign_up = (FloatingActionButton) findViewById(R.id.sign_up);
-        fab_sign_up.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                dialog.show();
-            }
-        });
         setUpVariables();
         context = LoginActivity.this;
         dialog = new Dialog(context);
