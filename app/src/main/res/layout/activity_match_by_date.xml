@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.SocScore.android.app.MatchAnalysisActivity"
+    tools:context="com.SocScore.android.app.MatchByDateActivity"
     android:background="@drawable/background_blurry">
 
-    <include layout="@layout/content_match_analysis" />
+    <include layout="@layout/content_match_by_date" />
 
 </android.support.design.widget.CoordinatorLayout>

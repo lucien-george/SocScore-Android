@@ -94,6 +94,14 @@
         <activity
             android:name=".PlayerByPenaltiesActivity"
             android:label="@string/title_activity_player_by_penalties"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".MatchByIDActivity"
+            android:label="@string/title_activity_match_by_id"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".MatchByDateActivity"
+            android:label="@string/title_activity_match_by_date"
             android:theme="@style/AppTheme"></activity>
     </application>
 

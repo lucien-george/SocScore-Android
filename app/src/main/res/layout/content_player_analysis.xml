@@ -68,7 +68,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Check player ranking"
+        android:text="Players ranking"
         android:id="@+id/btn_player_ranking"
         android:background="@drawable/sign_in_background"
         android:onClick="rankPlayers"/>
